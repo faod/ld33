@@ -9,6 +9,7 @@
 
 #include "main.hpp"
 #include "failure.hpp"
+#include "game.hpp"
 
 using std::cerr;
 using std::endl;
@@ -98,13 +99,17 @@ int main(int argc, char *argv[]) {
 		ALLEGRO_COLOR grey  = al_map_rgb(55, 55, 55);
 
 		ALLEGRO_EVENT ev;
+
+        Game game(m);
+
 		int step = 0;
 		al_start_timer(m.animationTimer);
 		bool loop = true;
 		while (al_wait_for_event(m.animationEQ, &ev), loop) {
 			al_clear_to_color(grey);
 
-			// TODO
+            game.update();
+            game.refresh();
 
 			al_flip_display();
 

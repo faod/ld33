@@ -5,9 +5,19 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
+#include "main.hpp"
+
+
 class Game {
 public:
+    Game(Main& m) : main_(m) {}
 	int flags;
+
+    void update();
+    void refresh();
+
+private:
+    Main& main_;
 };
 
 #endif
