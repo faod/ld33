@@ -47,13 +47,13 @@ Main::Main(int screen_w, int screen_h) {
 
 	if (!al_init_image_addon()) throw Failure("failed to initialise image support!");
 
-	//if (!al_install_audio()) throw Failure("failed to initialise audio support!");
-	//if (!al_init_acodec_addon()) throw Failure("failed to initialise audio codecs support!");
+	if (!al_install_audio()) throw Failure("failed to initialise audio support!");
+	if (!al_init_acodec_addon()) throw Failure("failed to initialise audio codecs support!");
 
 	//if (!al_init_primitives_addon()) throw Failure("failed to initialise primitives!");
 
-	//al_init_font_addon();
-	//if (!(console_font = al_create_builtin_font())) throw Failure("failed to initialise console font!");
+	al_init_font_addon();
+	if (!(console_font = al_create_builtin_font())) throw Failure("failed to initialise console font!");
 
 	// ALLEGRO_EVENT_DISPLAY_*
 	al_register_event_source(inputEQ, al_get_display_event_source(display));
@@ -70,11 +70,11 @@ Main::Main(int screen_w, int screen_h) {
 
 // Deinitialize Allegro and its addons
 Main::~Main() {
-	//al_destroy_font(console_font);
+	al_destroy_font(console_font);
 
-	//al_shutdown_primitives_addon();
+	al_shutdown_primitives_addon();
 	
-	//al_uninstall_audio();
+	al_uninstall_audio();
 
 	al_shutdown_image_addon();
 
