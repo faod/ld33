@@ -19,7 +19,9 @@
 #ifndef _PERLIN_HPP
 #define	_PERLIN_HPP
 
-void reseed();
+/// Set or Reset the seed (you probably don't need to call that function at all!)
+void reseed(int seed);
+
 float noise1(float arg);
 float noise2(float vec[2]);
 float noise3(float vec[3]); /* The simplex noise algorithm is much more efficient in 3D */

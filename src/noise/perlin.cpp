@@ -59,9 +59,10 @@ float noise1(float arg)
 	return lerp(sx, u, v);
 }
 
-void reseed()
+void reseed(int s)
 {
-    seed = 0;
+    seed = s;
+    srand(seed);
     start = 1;
 }
 

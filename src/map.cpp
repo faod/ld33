@@ -17,7 +17,7 @@ Map::Map(int width, int height, float resolution) : width_(width), height_(heigh
     al_set_target_bitmap(bm_);
 
     swampgrassgen(resolution);
-    reseed();
+    reseed(al_get_time() * 1000);
     rockgen(resolution);
     al_set_target_backbuffer(al_get_current_display());
 }
