@@ -5,8 +5,12 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
+#include <vector>
+#include <memory>
+
 #include "main.hpp"
 #include "map.hpp"
+#include "objects/object.hpp"
 
 class Game {
 public:
@@ -19,6 +23,7 @@ public:
 private:
     Main& main_;
     Map map_;
+    std::vector<std::shared_ptr<Object>> objects_;
 };
 
 #endif
