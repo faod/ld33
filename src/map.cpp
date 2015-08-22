@@ -13,7 +13,7 @@
 
 Map::Map(int width, int height, float resolution) : width_(width), height_(height), tiles_(width_, std::vector<BIOME>(height))
 {
-    bm_ = al_create_bitmap(width_, height_);
+    bm_ = al_create_bitmap(width_ * 32 , height_ * 32);
     al_set_target_bitmap(bm_);
 
     const float max = static_cast<float>(std::max(width_, height_));
@@ -28,12 +28,12 @@ Map::Map(int width, int height, float resolution) : width_(width), height_(heigh
             if(per < -0.2)
             {
                 tiles_[i][j] = SWAMP;
-                al_draw_pixel(i, j, al_map_rgb(0, 255, 0));
+                al_draw_filled_rectangle(i * 32, j * 32, i * 32 + 32, j * 32 + 32, al_map_rgb(0, 255, 0));
             }
             else
             {
                 tiles_[i][j] = GRASS;
-                al_draw_pixel(i, j, al_map_rgb(255, 255, 0));
+                al_draw_filled_rectangle(i * 32, j * 32, i * 32 + 32, j * 32 + 32,  al_map_rgb(255, 255, 0));
             }
         }
     }
@@ -42,5 +42,24 @@ Map::Map(int width, int height, float resolution) : width_(width), height_(heigh
 
 void Map::draw()
 {
-    al_draw_scaled_bitmap(bm_, 0, 0, width_, height_, 0, 0, width_ * 32, height_ * 32, 0);
+    al_draw_bitmap(bm_, 0, 0, 0);
+}
+
+void Map::toggleTile(int x, int y)
+{
+    al_set_target_bitmap(bm_);
+
+    ALLEGRO_COLOR cl;
+    if( tiles_[x][y] == SWAMP)
+    {
+        tiles_[x][y] = GRASS;
+        cl = al_map_rgb(255, 255, 0);
+    }
+    else
+    {
+        tiles_[x][y] = SWAMP;
+        cl = al_map_rgb(0, 255, 0);
+    }
+    al_draw_filled_rectangle(x * 32, y * 32, x * 32 + 32, y * 32 + 32, cl);
+    al_set_target_backbuffer(al_get_current_display());
 }
