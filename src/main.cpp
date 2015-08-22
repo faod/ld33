@@ -135,6 +135,15 @@ int main(int argc, char *argv[]) {
 
         Game game(m);
 
+        ALLEGRO_THREAD* input = al_create_thread(Game::startInput, &game);
+        if(input)
+        {
+            al_start_thread(input);
+        }
+        else
+        {
+            throw Failure("failure to create input thread");
+        }
 		int step = 0;
 		al_start_timer(m.animationTimer);
         m.loop = true;
@@ -146,9 +155,6 @@ int main(int argc, char *argv[]) {
 
 			al_flip_display();
 
-			while (al_get_next_event(m.inputEQ, &ev))
-				if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-					m.loop = false;
 		}
 	}
 	catch (Failure f) {
