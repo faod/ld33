@@ -76,6 +76,9 @@ void Map::draw(int xpos, int ypos, int w, int h)
 
 void Map::toggleTile(int x, int y)
 {
+    if(tiles_[x][y] == ROCK)
+        return;
+
     al_set_target_bitmap(bm_);
 
     ALLEGRO_COLOR cl;
