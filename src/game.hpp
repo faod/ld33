@@ -6,7 +6,7 @@
 #define GAME_HPP
 
 #include "main.hpp"
-
+#include "map.hpp"
 
 class Game {
 public:
@@ -18,6 +18,7 @@ public:
 
 private:
     Main& main_;
+    Map map_;
 };
 
 #endif
