@@ -40,9 +40,9 @@ Map::Map(int width, int height, float resolution) : width_(width), height_(heigh
     al_set_target_backbuffer(al_get_current_display());
 }
 
-void Map::draw()
+void Map::draw(int xpos, int ypos, int w, int h)
 {
-    al_draw_bitmap(bm_, 0, 0, 0);
+    al_draw_bitmap_region(bm_, xpos, ypos, w, h, 0, 0, 0);
 }
 
 void Map::toggleTile(int x, int y)

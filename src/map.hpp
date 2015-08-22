@@ -12,7 +12,8 @@ class Map
 
         Map(int width, int height, float resolution);
 
-        void draw();
+        void draw(int xpos, int ypos, int w, int h);
+        void toggleTile(int x, int y);
     private:
         int width_;
         int height_;

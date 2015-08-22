@@ -22,5 +22,5 @@ void Game::update()
 
 void Game::refresh()
 {
-    map_.draw();
+    map_.draw(0, 0, main_.screen_w, main_.screen_h);
 }
