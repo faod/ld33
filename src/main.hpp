@@ -27,7 +27,7 @@
 
 using std::int32_t;
 
-#define APP_NAME "Swamp man want his HOME!"
+#define APP_NAME "Swamp man wants his HOME!"
 #define RESOURCES_DIR "data"
 
 /** Creates an allegro context **/
