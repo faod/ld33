@@ -11,7 +11,7 @@
 
 #include <algorithm>
 
-Map::Map(int width, int height, float resolution) : width_(width), height_(height)
+Map::Map(int width, int height, float resolution) : width_(width), height_(height), tiles_(width_, std::vector<BIOME>(height))
 {
     bm_ = al_create_bitmap(width_, height_);
     al_set_target_bitmap(bm_);
@@ -23,7 +23,18 @@ Map::Map(int width, int height, float resolution) : width_(width), height_(heigh
         for(int j = 0; j < height_; ++j)
         {
             float vec[2] = {(i + 0.5f) / max * resolution, (j + 0.5f) / max * resolution};
-            al_draw_pixel(i, j , al_map_rgb_f(noise2(vec), 0., 0.));
+            float per = noise2(vec);
+
+            if(per < -0.2)
+            {
+                tiles_[i][j] = SWAMP;
+                al_draw_pixel(i, j, al_map_rgb(0, 255, 0));
+            }
+            else
+            {
+                tiles_[i][j] = GRASS;
+                al_draw_pixel(i, j, al_map_rgb(255, 255, 0));
+            }
         }
     }
     al_set_target_backbuffer(al_get_current_display());
