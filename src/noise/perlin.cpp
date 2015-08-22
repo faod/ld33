@@ -23,6 +23,7 @@ static float g3[B + B + 2][3];
 static float g2[B + B + 2][2];
 static float g1[B + B + 2];
 static int start = 1;
+static unsigned int seed = 0;
 
 static void init(void);
 
@@ -56,6 +57,12 @@ float noise1(float arg)
 	v = rx1 * g1[ p[ bx1 ] ];
 
 	return lerp(sx, u, v);
+}
+
+void reseed()
+{
+    seed = 0;
+    start = 1;
 }
 
 float noise2(float vec[2])
@@ -168,7 +175,6 @@ static void normalize3(float v[3])
 }
 
 static int randomize(void) {
-	static unsigned int seed = 0;
 
 	if (seed == 0) {
 		seed = time(NULL);

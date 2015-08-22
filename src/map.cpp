@@ -16,6 +16,14 @@ Map::Map(int width, int height, float resolution) : width_(width), height_(heigh
     bm_ = al_create_bitmap(width_ * 32 , height_ * 32);
     al_set_target_bitmap(bm_);
 
+    swampgrassgen(resolution);
+    reseed();
+    rockgen(resolution);
+    al_set_target_backbuffer(al_get_current_display());
+}
+
+void Map::swampgrassgen(float resolution)
+{
     const float max = static_cast<float>(std::max(width_, height_));
 
     for(int i = 0; i < width_; ++i)
@@ -37,8 +45,29 @@ Map::Map(int width, int height, float resolution) : width_(width), height_(heigh
             }
         }
     }
-    al_set_target_backbuffer(al_get_current_display());
+
 }
+
+void Map::rockgen(float resolution)
+{
+    const float max = static_cast<float>(std::max(width_, height_));
+
+    for(int i = 0; i < width_; ++i)
+    {
+        for(int j = 0; j < height_; ++j)
+        {
+            float vec[2] = {(i + 0.5f) / max * resolution, (j + 0.5f) / max * resolution};
+            float per = noise2(vec);
+
+            if(per < -0.4)
+            {
+                tiles_[i][j] = ROCK;
+                al_draw_filled_rectangle(i * 32, j * 32, i * 32 + 32, j * 32 + 32, al_map_rgb(222, 184, 135));
+            }
+        }
+    }
+}
+
 
 void Map::draw(int xpos, int ypos, int w, int h)
 {

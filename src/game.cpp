@@ -22,5 +22,7 @@ void Game::update()
 
 void Game::refresh()
 {
-    map_.draw(0, 0, main_.screen_w, main_.screen_h);
+    static int xpos = 0;
+    map_.draw(xpos, 0, main_.screen_w, main_.screen_h);
+    xpos++;
 }
