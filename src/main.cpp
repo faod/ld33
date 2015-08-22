@@ -137,8 +137,8 @@ int main(int argc, char *argv[]) {
 
 		int step = 0;
 		al_start_timer(m.animationTimer);
-		bool loop = true;
-		while (al_wait_for_event(m.animationEQ, &ev), loop) {
+        m.loop = true;
+		while (al_wait_for_event(m.animationEQ, &ev), m.loop) {
 			al_clear_to_color(grey);
 
             game.update();
@@ -148,7 +148,7 @@ int main(int argc, char *argv[]) {
 
 			while (al_get_next_event(m.inputEQ, &ev))
 				if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-					loop = false;
+					m.loop = false;
 		}
 	}
 	catch (Failure f) {

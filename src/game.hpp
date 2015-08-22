@@ -17,8 +17,10 @@ class Swampman;
 class Game {
 public:
     Game(Main& m);
-	int flags;
 
+    static void *startInput(ALLEGRO_THREAD* t, void* arg);
+
+    void input(ALLEGRO_THREAD* t);
     void update();
     void refresh();
 
