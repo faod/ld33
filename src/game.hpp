@@ -20,6 +20,7 @@ public:
     void update();
     void refresh();
 
+    void addObject(std::shared_ptr<Object> obj);
 private:
     Main& main_;
     Map map_;

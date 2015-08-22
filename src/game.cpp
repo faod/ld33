@@ -1,3 +1,4 @@
+#include <algorithm>
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
@@ -25,4 +26,10 @@ void Game::refresh()
     static int xpos = 0;
     map_.draw(xpos, 0, main_.screen_w, main_.screen_h);
     xpos++;
+}
+
+void Game::addObject(std::shared_ptr<Object> obj)
+{
+    if(std::find(objects_.begin(), objects_.end(), obj) == objects_.end())
+        objects_.push_back(obj);
 }
