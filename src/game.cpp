@@ -8,6 +8,12 @@
 
 #include "game.hpp"
 
+
+Game::Game(Main& m) : main_(m)
+{
+
+}
+
 void Game::update()
 {
 

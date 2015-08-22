@@ -10,7 +10,7 @@
 
 class Game {
 public:
-    Game(Main& m) : main_(m) {}
+    Game(Main& m);
 	int flags;
 
     void update();
