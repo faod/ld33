@@ -29,4 +29,17 @@ public:
 	virtual ConvexHull* getConvexHull() = 0;
 };
 
+class baseObject {
+	glm::vec2 position;
+public:
+	/// Returns the global position in pixels
+	inline glm::vec2 getPosition() { return position; };
+
+	/// Sets the global position
+	inline void setPosition(glm::vec2 &pos) { this->position = pos; };
+
+	/// Append the given coordinates to this object's position
+	inline void updatePosition(glm::vec2 &delta) { this->position += delta; };
+}
+
 #endif // OBJ_HPP
