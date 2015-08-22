@@ -22,7 +22,7 @@ Map::Map(int width, int height, float resolution) : width_(width), height_(heigh
     {
         for(int j = 0; j < height_; ++j)
         {
-            float vec[2] = {(i + 0.5) / max * resolution, (j + 0.5) / max * resolution};
+            float vec[2] = {(i + 0.5f) / max * resolution, (j + 0.5f) / max * resolution};
             al_draw_pixel(i, j , al_map_rgb_f(noise2(vec), 0., 0.));
         }
     }
@@ -31,5 +31,5 @@ Map::Map(int width, int height, float resolution) : width_(width), height_(heigh
 
 void Map::draw()
 {
-    al_draw_scaled_bitmap(bm_, 0, 0, width_, height_, 0, 0, width_ * 10, height_ * 10, 0);
+    al_draw_scaled_bitmap(bm_, 0, 0, width_, height_, 0, 0, width_ * 32, height_ * 32, 0);
 }
