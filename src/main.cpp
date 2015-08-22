@@ -79,7 +79,7 @@ Main::Main() {
 	if (!al_install_audio()) throw Failure("failed to initialise audio support!");
 	if (!al_init_acodec_addon()) throw Failure("failed to initialise audio codecs support!");
 
-	//if (!al_init_primitives_addon()) throw Failure("failed to initialise primitives!");
+	if (!al_init_primitives_addon()) throw Failure("failed to initialise primitives!");
 
 	al_init_font_addon();
 	if (!(console_font = al_create_builtin_font())) throw Failure("failed to initialise console font!");
