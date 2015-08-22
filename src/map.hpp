@@ -6,7 +6,7 @@
 class Map
 {
     public:
-        Map(int width, int height);
+        Map(int width, int height, float resolution);
 
         void draw();
     private:

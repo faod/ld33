@@ -40,6 +40,7 @@ Main::Main() {
         al_set_config_value(config, "", "window_width", "800");
         al_set_config_value(config, "", "map_width", "50");
         al_set_config_value(config, "", "map_height", "20");
+        al_set_config_value(config, "", "perlin_resolution", "150");
         al_save_config_file(al_path_cstr(path, '/'), config);
     }
     al_destroy_path(path);

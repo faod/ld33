@@ -11,12 +11,11 @@
 
 #include <algorithm>
 
-Map::Map(int width, int height) : width_(width), height_(height)
+Map::Map(int width, int height, float resolution) : width_(width), height_(height)
 {
     bm_ = al_create_bitmap(width_, height_);
     al_set_target_bitmap(bm_);
 
-    const float resolution = 150.0;
     const float max = static_cast<float>(std::max(width_, height_));
 
     for(int i = 0; i < width_; ++i)
