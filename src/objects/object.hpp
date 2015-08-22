@@ -40,8 +40,10 @@ public:
 	/// Append the given coordinates to this object's position
 	inline void updatePosition(glm::vec2 &delta) { this->position += delta; };
 
+    /// true if given object collides with this
     virtual bool collide(Object &other) = 0;
 
+    /// return the convex hull for this object
     virtual ConvexHull* getConvexHull() = 0;
 };
 
