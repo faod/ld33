@@ -65,7 +65,7 @@ ALLEGRO_EVENT ev;
         else if(!swampman_) continue;
         else
         {
-            swampman_->processInput(ev)
+            swampman_->processInput(ev);
         }
     }
 
