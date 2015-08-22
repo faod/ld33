@@ -22,7 +22,7 @@ public:
 	virtual void updatePosition(glm::vec2 &delta) = 0;
 
 	/// Returns `true` if the given object collides with this object
-	virtual boolean collide(Object &other) = 0;
+	virtual bool collide(Object &other) = 0;
 
 	/// Returns the convex hull for this object for collision calculation purposes
 	virtual ConvexHull* getConvexHull() = 0;
@@ -40,9 +40,9 @@ public:
 	/// Append the given coordinates to this object's position
 	inline void updatePosition(glm::vec2 &delta) { this->position += delta; };
 
-    virtual boolean collide(Object &other) = 0;
+    virtual bool collide(Object &other) = 0;
 
     virtual ConvexHull* getConvexHull() = 0;
-}
+};
 
 #endif // OBJ_HPP
