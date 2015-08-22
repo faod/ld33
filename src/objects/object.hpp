@@ -4,7 +4,6 @@
 
 #include <glm/glm.hpp>
 
-#include "collision_information.hpp"
 
 struct ConvexHull {
 	int len;
