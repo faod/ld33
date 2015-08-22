@@ -27,7 +27,8 @@
 
 using std::int32_t;
 
-#define APP_NAME "Allegro Game"
+#define APP_NAME "Swamp man want his HOME!"
+#define RESOURCES_DIR "data"
 
 /** Creates an allegro context **/
 class Main {
@@ -40,9 +41,10 @@ public:
 	ALLEGRO_EVENT_QUEUE *refreshEQ, *animationEQ, *inputEQ;
 	ALLEGRO_TIMER *refreshTimer, *animationTimer;
 	ALLEGRO_FONT *console_font;
+    ALLEGRO_CONFIG *config;
 
 	/* Constructor may throw a `Failure` exception. */
-	Main(int screen_w, int screen_h);
+	Main();
 	~Main();
 };
 

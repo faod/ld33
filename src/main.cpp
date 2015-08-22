@@ -7,6 +7,7 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
 
+
 #include "main.hpp"
 #include "failure.hpp"
 #include "game.hpp"
@@ -15,14 +16,41 @@ using std::cerr;
 using std::endl;
 
 // Initialize Allegro and its addons
-Main::Main(int screen_w, int screen_h) {
-	this->screen_h = screen_h;
-	this->screen_w = screen_w;
+Main::Main() {
+
+	if (!al_init()) throw Failure("failed to initialize allegro!");
+
+    //load allegro_config
+    ALLEGRO_PATH *path;
+    path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+    al_set_path_filename(path, "config.cfg");
+
+    int res = al_filename_exists(al_path_cstr(path, '/'));
+
+    if(res)
+    {
+        //if config file found
+        config = al_load_config_file(al_path_cstr(path, '/'));
+    }
+    else
+    {
+        //create default config
+        config = al_create_config();
+        al_set_config_value(config, "", "window_height", "600");
+        al_set_config_value(config, "", "window_width", "800");
+        al_set_config_value(config, "", "map_width", "50");
+        al_set_config_value(config, "", "map_height", "20");
+        al_save_config_file(al_path_cstr(path, '/'), config);
+    }
+    al_destroy_path(path);
+
+    //Set screen size
+	this->screen_h = atoi(al_get_config_value(config, "", "window_height"));
+	this->screen_w = atoi(al_get_config_value(config, "", "window_width"));
 
 	refresh_tick = 30;
 	animation_tick = 60;
 
-	if (!al_init()) throw Failure("failed to initialize allegro!");
 
 	al_set_app_name(APP_NAME);
 	al_set_org_name(APP_NAME);
@@ -66,6 +94,8 @@ Main::Main(int screen_w, int screen_h) {
 	//al_register_event_source(frameEQ, al_get_timer_event_source(frameTimer));
 	// ALLEGRO_EVENT_TIMER animation update
 	al_register_event_source(animationEQ, al_get_timer_event_source(animationTimer));
+
+
 }
 
 // Deinitialize Allegro and its addons
@@ -90,12 +120,14 @@ Main::~Main() {
 	al_uninstall_keyboard();
 	
 	al_destroy_display(display);
+
+    al_destroy_config(config);
 }
 
 /** OpenGL 3.3+ modern **/
 int main(int argc, char *argv[]) {
 	try {
-		Main m(800, 600);
+		Main m;
 		ALLEGRO_COLOR grey  = al_map_rgb(55, 55, 55);
 
 		ALLEGRO_EVENT ev;
