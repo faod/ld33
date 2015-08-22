@@ -30,6 +30,12 @@ public:
 
 	/// Returns the axis aligned bounding box for this object
 	virtual glm::vec4 getBoundingBox();
+
+    virtual void update();
+
+    virtual void draw();
+
+    virtual ~Object() {};
 };
 
 #endif // OBJ_HPP

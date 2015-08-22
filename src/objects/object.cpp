@@ -24,3 +24,13 @@ glm::vec4 Object::getBoundingBox() { // TODO
 	glm::vec4 res;
 	return res;
 }
+
+void Object::update()
+{
+    //empty
+}
+
+void Object::draw()
+{
+    //empty
+}

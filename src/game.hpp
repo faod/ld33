@@ -12,6 +12,8 @@
 #include "map.hpp"
 #include "objects/object.hpp"
 
+class Swampman;
+
 class Game {
 public:
     Game(Main& m);
@@ -24,6 +26,7 @@ public:
 private:
     Main& main_;
     std::vector<std::shared_ptr<Object>> objects_;
+    std::shared_ptr<Swampman> swampman_;
     Map map_;
 };
 
