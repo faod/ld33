@@ -62,27 +62,11 @@ ALLEGRO_EVENT ev;
             main_.loop = false;
             break;
         }
-     /*   else if(!player) continue;
-       else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+        else if(!swampman_) continue;
+        else
         {
-            switch (ev.keyboard.keycode)
-            {
-                case ALLEGRO_KEY_LEFT: { this->player->moveLeft();      break; }
-                case ALLEGRO_KEY_RIGHT: { this->player->moveRight();    break; }
-                case ALLEGRO_KEY_UP: { this->player->jump();            break; }
-                case ALLEGRO_KEY_RCTRL: { this->player->onAttack();     break; }
-                default : break;
-            }
+            swampman_->processInput(ev)
         }
-        else if (ev.type == ALLEGRO_EVENT_KEY_UP)
-        {
-            switch(ev.keyboard.keycode)
-            {
-                case ALLEGRO_KEY_LEFT: { this->player->stopLeft(); break; }
-                case ALLEGRO_KEY_RIGHT: { this->player->stopRight(); break; }
-            }
-        }
-        */
     }
 
 }

@@ -13,9 +13,15 @@ class Swampman : public Object
         virtual void refresh();
         virtual void draw();
 
+        void processInput(ALLEGRO_EVENT ev);
 
     private:
         ALLEGRO_BITMAP *sprite_;
+
+        bool up;
+        bool down;
+        bool left;
+        bool right;
 };
 
 #endif 

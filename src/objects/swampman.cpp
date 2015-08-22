@@ -37,3 +37,30 @@ void Swampman::draw()
 }
 
 
+void Swampman::processInput(ALLEGRO_EVENT ev)
+{
+    if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
+    {
+        switch(ev.keyboard.keycode)
+        {
+            case ALLEGRO_KEY_UP:    up    = true; break;
+            case ALLEGRO_KEY_DOWN:  down  = true; break;
+            case ALLEGRO_KEY_LEFT:  left  = true; break;
+            case ALLEGRO_KEY_RIGHT: right = true; break;
+            default: break;
+        };
+    }
+    if(ev.type == ALLEGRO_EVENT_KEY_UP)
+    {
+        switch(ev.keyboard.keycode)
+        {
+            case ALLEGRO_KEY_UP:    up    = false; break;
+            case ALLEGRO_KEY_DOWN:  down  = false; break;
+            case ALLEGRO_KEY_LEFT:  left  = false; break;
+            case ALLEGRO_KEY_RIGHT: right = false; break;
+            default: break;
+        };
+
+    }
+}
+
