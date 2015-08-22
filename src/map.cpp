@@ -1,4 +1,5 @@
 
+#include <algorithm>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
@@ -8,10 +9,9 @@
 
 #include "map.hpp"
 #include "noise/perlin.hpp"
+#include "game.hpp"
 
-#include <algorithm>
-
-Map::Map(int width, int height, float resolution) : width_(width), height_(height), tiles_(width_, std::vector<BIOME>(height))
+Map::Map(int width, int height, float resolution, Game& game) : width_(width), height_(height), tiles_(width_, std::vector<BIOME>(height)), game_(game)
 {
     bm_ = al_create_bitmap(width_ * 32 , height_ * 32);
     al_set_target_bitmap(bm_);

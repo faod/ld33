@@ -11,7 +11,8 @@
 
 Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", "map_width")),
                                      atoi(al_get_config_value(main_.config, "", "map_height")),
-                                     atof(al_get_config_value(main_.config, "", "perlin_resolution")))
+                                     atof(al_get_config_value(main_.config, "", "perlin_resolution")),
+                                     *this)
 {
 }
 

@@ -23,8 +23,8 @@ public:
     void addObject(std::shared_ptr<Object> obj);
 private:
     Main& main_;
-    Map map_;
     std::vector<std::shared_ptr<Object>> objects_;
+    Map map_;
 };
 
 #endif
