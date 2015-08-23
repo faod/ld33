@@ -28,6 +28,8 @@ class Swampman : public BoxObject
         bool left;
         bool right;
 
+        unsigned int hp_;
+
         void updateOrientation();
 };
 
