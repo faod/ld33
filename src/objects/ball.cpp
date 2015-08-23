@@ -9,9 +9,10 @@
 
 #include "ball.hpp"
 
-Ball::Ball(glm::vec2 position, float direction) : BoxObject(glm::vec2(32.f, 32.f))
+Ball::Ball(glm::vec2 position, float direction) : BoxObject(glm::vec2(32.f, 32.f)), distleft_(160.)
 {
     setPosition(position);
     orientation = direction;
     setSpeed(8.);
 }
+

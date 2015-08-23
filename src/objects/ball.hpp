@@ -8,6 +8,9 @@ class Ball : public BoxObject
 {
     public:
         Ball(glm::vec2 position, float direction);
+
+    private:
+        float distleft_;
 };
 
 #endif
