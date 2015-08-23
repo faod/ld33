@@ -4,14 +4,16 @@
 
 #include "object.hpp"
 
+class Game;
 
 class Ball : public BoxObject
 {
     public:
-        Ball(glm::vec2 position, float direction);
+        Ball(glm::vec2 position, Game &g, float direction);
 
         virtual void update();
     private:
+        Game& game_;
         float distleft_;
 };
 
