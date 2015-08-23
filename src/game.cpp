@@ -33,13 +33,13 @@ void Game::update()
 void Game::refresh()
 {
     glm::vec2 smpos = swampman_->getPosition();
-    map_.draw(static_cast<int>(smpos[0]) - main_.screen_w / 2,
-              static_cast<int>(smpos[1]) - main_.screen_h / 2,
+    map_.draw(static_cast<int>(smpos[0]) - main_.screen_w / 2.,
+              static_cast<int>(smpos[1]) - main_.screen_h / 2.,
                main_.screen_w, main_.screen_h);
 
     for(auto it = objects_.begin(); it != objects_.end(); ++it)
-        (*it)->draw(glm::vec2(static_cast<int>(smpos.x) - main_.screen_w / 2,
-                              static_cast<int>(smpos.y) - main_.screen_h / 2));
+        (*it)->draw(glm::vec2(static_cast<int>(smpos.x) - main_.screen_w / 2.,
+                              static_cast<int>(smpos.y) - main_.screen_h / 2.));
 }
 
 void Game::addObject(std::shared_ptr<Object> obj)

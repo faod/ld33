@@ -36,10 +36,10 @@ protected:
 public:
 
 	/// Construct for objects with no collision
-	Object(): convexHull(0), position(0.), speed(0.) {};
+	Object(): convexHull(0), position(0.), speed(0.), orientation(0.) {};
 
 	/// Objects with a ConvexHull to compute collisions
-	Object(ConvexHull &convexHull): convexHull(convexHull), position(0.), speed(0.) {};
+	Object(ConvexHull &convexHull): convexHull(convexHull), position(0.), speed(0.), orientation(0.) {};
 
 	/// Returns the global position in pixels
 	virtual glm::vec2 getPosition();
