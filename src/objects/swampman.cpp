@@ -34,7 +34,27 @@ Swampman::~Swampman()
 
 void Swampman::update()
 {
+    updateOrientation();
+}
 
+void Swampman::updateOrientation()
+{
+    if(up && !down && !right && left)
+        orientation = orientations[0];
+    if(up && (left == right))
+        orientation = orientations[1];
+    if(up && !down && right && !left)
+        orientation = orientations[2];
+    if(left && (up == down))
+        orientation = orientations[3];
+    if(right && (up == down))
+        orientation = orientations[5];
+    if(left && down && !up && !right)
+        orientation = orientations[6];
+    if(down && (left == right))
+        orientation = orientations[7];
+    if(right && !left && down && !up)
+        orientation = orientations[8];
 }
 
 void Swampman::draw(glm::vec2 screen_ul_corner)

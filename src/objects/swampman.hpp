@@ -25,6 +25,8 @@ class Swampman : public BoxObject
         bool down;
         bool left;
         bool right;
+
+        void updateOrientation();
 };
 
 #endif 
