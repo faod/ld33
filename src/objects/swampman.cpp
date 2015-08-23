@@ -131,5 +131,5 @@ void Swampman::drawHUD(int width, int height)
 
     al_draw_filled_rectangle(20. , 20. , 20. + (hp_ / 100. * 80), 30., al_map_rgb(241, 31, 31));
 
-    al_draw_textf(Main::console_font, al_map_rgb(241, 31, 31), 110., 22., 0, "%d",hp_);
+    al_draw_textf(Main::main_font, al_map_rgb(241, 31, 31), 110., 22., 0, "%d",hp_);
 }
