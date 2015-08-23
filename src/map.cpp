@@ -269,14 +269,7 @@ void Map::drawrock()
 
             if(b == ROCK)
             {
-                std::shared_ptr<ALLEGRO_BITMAP> bm = rock_ << tiles_[y][x].topleft();
-                al_draw_bitmap(bm.get(), x * 32, y * 32, 0);
-                bm = rock_ << tiles_[y][x].topright();
-                al_draw_bitmap(bm.get(), x * 32 + 16, y* 32, 0);
-                bm = rock_ << tiles_[y][x].botleft();
-                al_draw_bitmap(bm.get(), x * 32, y * 32 + 16, 0);
-                bm = rock_ << tiles_[y][x].botright();
-                al_draw_bitmap(bm.get(), x * 32 + 16, y * 32 + 16, 0);
+                drawTile(tiles_[y][x], nullptr);
             }
         }
     }
