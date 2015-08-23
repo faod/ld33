@@ -73,6 +73,7 @@ void Swampman::draw(glm::vec2 screen_ul_corner)
                            orientation,
                             0);
     drawHull(screen_ul_corner);
+
 }
 
 
@@ -103,3 +104,7 @@ void Swampman::processInput(ALLEGRO_EVENT ev)
     }
 }
 
+void Swampman::drawHUD(int width, int height)
+{
+
+}

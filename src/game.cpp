@@ -40,6 +40,8 @@ void Game::refresh()
     for(auto it = objects_.begin(); it != objects_.end(); ++it)
         (*it)->draw(glm::vec2(static_cast<int>(smpos.x) - main_.screen_w / 2.,
                               static_cast<int>(smpos.y) - main_.screen_h / 2.));
+
+    swampman_->drawHUD(main_.screen_w, main_.screen_h);
 }
 
 void Game::addObject(std::shared_ptr<Object> obj)
