@@ -171,7 +171,9 @@ void Tile::update(Map &m)
 
         if(ignitetime_ == 0)
         {
-            //metamorphose
+            biome_ = GRASS;
+            m.updatevoisins(x_, y_);
+            m.drawTile(*this, nullptr);
         }
         else
         {
@@ -186,6 +188,11 @@ void Tile::ignite(unsigned int time)
     {
         ignitetime_ = time;
     }
+}
+
+void Tile::setVoisins(int id, BIOME b)
+{
+    voisins_[id] = b;
 }
 
 
@@ -258,6 +265,59 @@ void Map::drawswampgrass()
     }
 }
 
+void Map::updatevoisins(int x, int y)
+{
+    BIOME b = tiles_[y][x].getBiome();
+    if(x >= 1 && y >= 1)
+    {
+        tiles_[y - 1][x - 1].setVoisins(8, b);
+        if(tiles_[y - 1][x - 1].getBiome() == SWAMP)
+            drawTile(tiles_[y - 1][x - 1], nullptr);
+    }
+    if(y >= 1)
+    {
+        tiles_[y - 1][x].setVoisins(7, b);
+        if(tiles_[y - 1][x].getBiome() == SWAMP)
+            drawTile(tiles_[y - 1][x], nullptr);
+    }
+    if(x < tiles_[y].size() - 1 && y >= 1)
+    {
+        tiles_[y - 1][x + 1].setVoisins(6, b);
+        if(tiles_[y - 1][x + 1].getBiome() == SWAMP)
+            drawTile(tiles_[y - 1][x + 1], nullptr);
+    }
+    if(x >= 1)
+    {
+        tiles_[y][x - 1].setVoisins(5, b);
+        if(tiles_[y][x - 1].getBiome() == SWAMP)
+            drawTile(tiles_[y][x - 1], nullptr);
+    }
+    if(x < tiles_[y].size() - 1)
+    {
+        tiles_[y][x + 1].setVoisins(3, b);
+        if(tiles_[y][x + 1].getBiome() == SWAMP)
+            drawTile(tiles_[y][x + 1], nullptr);
+    }
+    if(x >= 1 && y < tiles_.size() - 1)
+    {
+        tiles_[y + 1][x - 1].setVoisins(0, b);
+        if(tiles_[y + 1][x - 1].getBiome() == SWAMP)
+            drawTile(tiles_[y + 1][x - 1], nullptr);
+    }
+    if(y < tiles_.size() - 1)
+    {
+        tiles_[y + 1][x].setVoisins(1, b);
+        if(tiles_[y + 1][x].getBiome() == SWAMP)
+            drawTile(tiles_[y + 1][x], nullptr);
+    }
+    if(x < tiles_[y].size() - 1 && y < tiles_.size() - 1)
+    {
+        tiles_[y + 1][x + 1].setVoisins(2, b);
+        if(tiles_[y + 1][x + 1].getBiome() == SWAMP)
+            drawTile(tiles_[y + 1][x + 1], nullptr);
+    }
+}
+
 void Map::drawrock()
 {
     al_set_target_bitmap(bm_);
@@ -326,9 +386,9 @@ void Map::update()
         for(int x = 0; x < tiles_[y].size(); ++x)
         {
             tiles_[y][x].update(*this);
-            if(start)
+            if(start && x % 2)
             {
-                //tiles_[y][x].ignite(1000);
+                tiles_[y][x].ignite(100);
             }
         }
     }

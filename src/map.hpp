@@ -38,6 +38,7 @@ class Tile
         inline int gety() const { return y_; };
 
         void setVoisins(BIOME v[9]);
+        void setVoisins(int id, BIOME b);
         BIOME getBiome() const;
         size_t topleft() const;
         size_t topright() const;
@@ -64,6 +65,7 @@ class Map
         void update();
         void draw(int xpos, int ypos, int w, int h);
         void drawTile(const Tile &t, std::shared_ptr<ALLEGRO_BITMAP> mask = nullptr);
+        void updatevoisins(int x, int y);
     private:
         void swampgrassgen(float resolution);
         void updatevoisins();
