@@ -23,7 +23,7 @@ Swampman::Swampman(glm::vec2 pos): BoxObject(glm::vec2(32.f, 32.f)) , up(false),
     al_set_target_bitmap(sprite_);
 
     al_draw_filled_rectangle(0, 0, 32, 32, al_map_rgb(255, 0, 0));
-
+    al_draw_filled_rectangle(14, 26, 18 , 30 , al_map_rgb(0  , 255, 0));
     al_set_target_backbuffer(al_get_current_display());
 
 }
@@ -65,8 +65,12 @@ void Swampman::updateOrientation()
 
 void Swampman::draw(glm::vec2 screen_ul_corner)
 {
-    al_draw_bitmap(sprite_, this->position.x - screen_ul_corner.x - 16, 
-                            this->position.y - screen_ul_corner.y - 16,
+    al_draw_rotated_bitmap(sprite_,
+                           16,
+                           16,
+                           this->position.x - screen_ul_corner.x,
+                           this->position.y - screen_ul_corner.y,
+                           orientation,
                             0);
     drawHull(screen_ul_corner);
 }
