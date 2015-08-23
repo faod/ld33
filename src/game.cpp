@@ -10,6 +10,8 @@
 
 #include "game.hpp"
 #include "objects/swampman.hpp"
+#include "objects/ball.hpp"
+
 
 Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", "map_width")),
                                      atoi(al_get_config_value(main_.config, "", "map_height")),
@@ -27,6 +29,9 @@ void Game::update()
 
     for(auto it = objects_.begin(); it != objects_.end(); ++it)
         (*it)->update();
+
+    auto it = std::remove(objects_.begin(), objects_.end(), nullptr);
+    objects_.erase(it, objects_.end());
 }
 
 
@@ -54,7 +59,7 @@ void Game::removeObject(std::shared_ptr<Object> obj)
 {
     auto it = std::find(objects_.begin(), objects_.end(), obj);
     if(it != objects_.end())
-        objects_.erase(it);
+        it->reset();
 
 }
 

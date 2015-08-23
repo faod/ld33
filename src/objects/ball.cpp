@@ -19,9 +19,10 @@ Ball::Ball(glm::vec2 position, Game &g, float direction) : BoxObject(glm::vec2(3
 
 void Ball::update()
 {
+    auto ptr = shared_from_this();
     if(distleft_ <= 0.)
     {
-        game_.removeObject(shared_from_this());
+        game_.removeObject(ptr);
     }
 
     step();
