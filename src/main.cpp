@@ -16,6 +16,7 @@ using std::cerr;
 using std::endl;
 
 ALLEGRO_FONT *Main::console_font = NULL;
+ALLEGRO_FONT *Main::main_font    = NULL;
 
 // Initialize Allegro and its addons
 Main::Main() {
@@ -86,6 +87,17 @@ Main::Main() {
 
 	al_init_font_addon();
 	if (!(console_font = al_create_builtin_font())) throw Failure("failed to initialise console font!");
+
+    //program font
+    path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+    al_append_path_component(path, RESOURCES_DIR);
+    al_set_path_filename(path, "font.png");
+    ALLEGRO_BITMAP *fbm = al_load_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+    al_destroy_path(path);
+
+    const int range[] = {' ', '~'};
+    if(!(main_font = al_grab_font_from_bitmap(fbm, 1, range))) throw Failure("failed to load main font!");
+    al_destroy_bitmap(fbm);
 
 	// ALLEGRO_EVENT_DISPLAY_*
 	al_register_event_source(inputEQ, al_get_display_event_source(display));
