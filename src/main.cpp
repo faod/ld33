@@ -23,6 +23,7 @@ Main::Main() {
     //load allegro_config
     ALLEGRO_PATH *path;
     path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+    al_append_path_component(path, RESOURCES_DIR);
     al_set_path_filename(path, "config.cfg");
 
     int res = al_filename_exists(al_path_cstr(path, '/'));
