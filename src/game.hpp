@@ -24,7 +24,9 @@ public:
     void update();
     void refresh();
 
+    void removeObject(std::shared_ptr<Object> obj);
     void addObject(std::shared_ptr<Object> obj);
+
 private:
     Main& main_;
     std::vector<std::shared_ptr<Object>> objects_;

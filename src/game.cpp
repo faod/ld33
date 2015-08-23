@@ -50,6 +50,14 @@ void Game::addObject(std::shared_ptr<Object> obj)
         objects_.push_back(obj);
 }
 
+void Game::removeObject(std::shared_ptr<Object> obj)
+{
+    auto it = std::find(objects_.begin(), objects_.end(), obj);
+    if(it != objects_.end())
+        objects_.erase(it);
+
+}
+
 void *Game::startInput(ALLEGRO_THREAD* t, void* arg)
 {
     static_cast<Game*>(arg)->input(t);
