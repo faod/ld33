@@ -42,7 +42,7 @@ public:
 	ALLEGRO_TIMER *refreshTimer, *animationTimer;
 	static ALLEGRO_FONT *console_font;
     static ALLEGRO_FONT *main_font;
-    ALLEGRO_CONFIG *config;
+    static ALLEGRO_CONFIG *config;
     bool loop;
 	/* Constructor may throw a `Failure` exception. */
 	Main();
