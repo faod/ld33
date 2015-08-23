@@ -15,6 +15,8 @@
 using std::cerr;
 using std::endl;
 
+ALLEGRO_FONT *Main::console_font = NULL;
+
 // Initialize Allegro and its addons
 Main::Main() {
 

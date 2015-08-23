@@ -40,7 +40,7 @@ public:
 	ALLEGRO_DISPLAY *display;
 	ALLEGRO_EVENT_QUEUE *refreshEQ, *animationEQ, *inputEQ;
 	ALLEGRO_TIMER *refreshTimer, *animationTimer;
-	ALLEGRO_FONT *console_font;
+	static ALLEGRO_FONT *console_font;
     ALLEGRO_CONFIG *config;
     bool loop;
 	/* Constructor may throw a `Failure` exception. */
