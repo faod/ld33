@@ -6,6 +6,7 @@
 #include <allegro5/allegro_font.h>
 
 #include <memory>
+#include <string>
 
 #include "swampman.hpp"
 #include "ball.hpp"
@@ -19,7 +20,7 @@
 
 float Swampman::orientations[9] = {PI4_3, -PI, -PI4_3, PI2, 0., -PI2, PI4, 0., -PI4 };
 
-Swampman::Swampman(glm::vec2 pos, Game &g): BoxObject(glm::vec2(32.f, 32.f)) , game_(g), up(false), down(false), left(false), right(false), throwing(false), hp_(50), ballammo_(3), throwcd_(0)
+Swampman::Swampman(glm::vec2 pos, Game &g): BoxObject(glm::vec2(32.f, 32.f)) , game_(g), up(false), down(false), left(false), right(false), throwing(false), hp_(100), ballammo_(3), throwcd_(0)
 {
     setPosition(pos);
 
@@ -126,7 +127,9 @@ void Swampman::processInput(ALLEGRO_EVENT ev)
 void Swampman::drawHUD(int width, int height)
 {
     //draw health bar rect
-    al_draw_rectangle(width / 2. - 40, height - 20., width / 2. + 40, height - 10., al_map_rgb(186, 54, 54), 1.);
+    al_draw_rectangle(20., 20., 100., 30., al_map_rgb(186, 54, 54), 1.);
 
-    al_draw_filled_rectangle(width / 2. - 40, height - 20., (width / 2. - 40.) + (hp_ / 100. * 80), height - 10., al_map_rgb(241, 31, 31));
+    al_draw_filled_rectangle(20. , 20. , 20. + (hp_ / 100. * 80), 30., al_map_rgb(241, 31, 31));
+
+    al_draw_textf(Main::console_font, al_map_rgb(241, 31, 31), 110., 22., 0, "%d",hp_);
 }
