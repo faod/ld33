@@ -96,9 +96,16 @@ Main::Main() {
     ALLEGRO_BITMAP *fbm = al_load_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
     al_destroy_path(path);
 
-    const int range[] = {' ', '~'};
-    if(!(main_font = al_grab_font_from_bitmap(fbm, 1, range))) throw Failure("failed to load main font!");
+    ALLEGRO_BITMAP *bigger = al_create_bitmap(al_get_bitmap_width(fbm) * 2, al_get_bitmap_height(fbm) * 2);
+
+    al_set_target_bitmap(bigger);
+    al_draw_scaled_bitmap(fbm, 0, 0, al_get_bitmap_width(fbm), al_get_bitmap_height(fbm), 0, 0, al_get_bitmap_width(fbm) * 2, al_get_bitmap_height(fbm) * 2, 0);
     al_destroy_bitmap(fbm);
+
+    al_set_target_backbuffer(al_get_current_display());
+    const int range[] = {' ', '~'};
+    if(!(main_font = al_grab_font_from_bitmap(bigger, 1, range))) throw Failure("failed to load main font!");
+    al_destroy_bitmap(bigger);
 
 	// ALLEGRO_EVENT_DISPLAY_*
 	al_register_event_source(inputEQ, al_get_display_event_source(display));
