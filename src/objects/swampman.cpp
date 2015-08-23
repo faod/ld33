@@ -24,7 +24,7 @@ Swampman::~Swampman()
     al_destroy_bitmap(sprite_);
 }
 
-void Swampman::refresh()
+void Swampman::update()
 {
 
 }

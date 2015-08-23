@@ -10,7 +10,7 @@ class Swampman : public Object
     public: 
         Swampman(glm::vec2 position);
         ~Swampman();
-        virtual void refresh();
+        virtual void update();
         virtual void draw();
 
         void processInput(ALLEGRO_EVENT ev);
