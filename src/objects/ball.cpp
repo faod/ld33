@@ -16,3 +16,13 @@ Ball::Ball(glm::vec2 position, float direction) : BoxObject(glm::vec2(32.f, 32.f
     setSpeed(8.);
 }
 
+void Ball::update()
+{
+    if(distleft_ <= 0.)
+    {
+       //TODO remove self
+    }
+
+    step();
+    distleft_-= speed;
+}
