@@ -14,7 +14,17 @@ Ball::Ball(glm::vec2 position, Game &g, float direction) : BoxObject(glm::vec2(3
 {
     setPosition(position);
     orientation = direction;
-    setSpeed(8.);
+    setSpeed(2.);
+
+    sprite_ = al_create_bitmap(32, 32);
+    al_set_target_bitmap(sprite_);
+    al_clear_to_color(al_map_rgb(0, 150, 150));
+    al_set_target_backbuffer(al_get_current_display());
+}
+
+Ball::~Ball()
+{
+    al_destroy_bitmap(sprite_);
 }
 
 void Ball::update()
@@ -27,4 +37,16 @@ void Ball::update()
 
     step();
     distleft_-= speed;
+}
+
+void Ball::draw(glm::vec2 screen_ul_corner)
+{
+    al_draw_rotated_bitmap(sprite_,
+                           16,
+                           16,
+                           this->position.x - screen_ul_corner.x,
+                           this->position.y - screen_ul_corner.y,
+                           orientation,
+                           0);
+    drawHull(screen_ul_corner);
 }
