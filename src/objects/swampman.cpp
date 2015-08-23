@@ -7,7 +7,7 @@
 
 #include "swampman.hpp"
 
-Swampman::Swampman(glm::vec2 pos)
+Swampman::Swampman(glm::vec2 pos): BoxObject(glm::vec2(32.f, 32.f))
 {
     setPosition(pos);
 
@@ -29,11 +29,12 @@ void Swampman::update()
 
 }
 
-void Swampman::draw()
+void Swampman::draw(glm::vec2 screen_ul_corner)
 {
-    al_draw_bitmap(sprite_, al_get_display_width(al_get_current_display()) / 2 - 16, 
-                            al_get_display_height(al_get_current_display()) / 2 - 16,
-                            0);    
+    al_draw_bitmap(sprite_, this->position.x - screen_ul_corner.x - 16, 
+                            this->position.y - screen_ul_corner.y - 16,
+                            0);
+    drawHull(screen_ul_corner);
 }
 
 

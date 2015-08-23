@@ -5,13 +5,13 @@
 
 #include "object.hpp"
 
-class Swampman : public Object
+class Swampman : public BoxObject
 {
     public: 
         Swampman(glm::vec2 position);
         ~Swampman();
         virtual void update();
-        virtual void draw();
+        virtual void draw(glm::vec2 screen_ul_corner);
 
         void processInput(ALLEGRO_EVENT ev);
 
