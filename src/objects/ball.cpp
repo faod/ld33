@@ -8,6 +8,7 @@
 
 
 #include "ball.hpp"
+#include "../game.hpp"
 
 Ball::Ball(glm::vec2 position, Game &g, float direction) : BoxObject(glm::vec2(32.f, 32.f)), game_(g), distleft_(160.)
 {
@@ -20,7 +21,7 @@ void Ball::update()
 {
     if(distleft_ <= 0.)
     {
-       //TODO remove self
+        game_.removeObject(shared_from_this());
     }
 
     step();
