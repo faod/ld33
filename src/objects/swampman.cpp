@@ -7,6 +7,14 @@
 
 #include "swampman.hpp"
 
+#define PI 3.141592653589793
+#define PI2 1.5707963267948966
+#define PI4 0.7853981633974483
+#define PI4_3 2.356194490192345
+
+
+float Swampman::orientations[9] = {-PI4_3, -PI, PI4_3, -PI2, 0., PI2, -PI4, 0., PI4 };
+
 Swampman::Swampman(glm::vec2 pos): BoxObject(glm::vec2(32.f, 32.f))
 {
     setPosition(pos);

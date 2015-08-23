@@ -10,6 +10,9 @@ class Swampman : public BoxObject
     public: 
         Swampman(glm::vec2 position);
         ~Swampman();
+
+        static float orientations[9];
+
         virtual void update();
         virtual void draw(glm::vec2 screen_ul_corner);
 
