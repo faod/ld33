@@ -10,7 +10,7 @@
 #include "ball.hpp"
 #include "../game.hpp"
 
-Ball::Ball(glm::vec2 position, Game &g, float direction) : BoxObject(glm::vec2(32.f, 32.f)), game_(g), distleft_(160.)
+Ball::Ball(glm::vec2 position, Game &g, float direction) : BoxObject(glm::vec2(32.f, 32.f)), game_(g), distleft_(360.)
 {
     setPosition(position);
     orientation = direction;
