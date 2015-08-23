@@ -33,6 +33,8 @@ class Swampman : public BoxObject
         bool right;
         bool throwing;
 
+        unsigned int ballammo_;
+        unsigned int throwcd_;
         unsigned int hp_;
 
         void updateOrientation();

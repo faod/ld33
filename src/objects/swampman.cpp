@@ -5,7 +5,11 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
 
+#include <memory>
+
 #include "swampman.hpp"
+#include "ball.hpp"
+#include "../game.hpp"
 
 #define PI 3.141592653589793
 #define PI2 1.5707963267948966
@@ -15,7 +19,7 @@
 
 float Swampman::orientations[9] = {PI4_3, -PI, -PI4_3, PI2, 0., -PI2, PI4, 0., -PI4 };
 
-Swampman::Swampman(glm::vec2 pos, Game &g): BoxObject(glm::vec2(32.f, 32.f)) , game_(g), up(false), down(false), left(false), right(false), hp_(50)
+Swampman::Swampman(glm::vec2 pos, Game &g): BoxObject(glm::vec2(32.f, 32.f)) , game_(g), up(false), down(false), left(false), right(false), throwing(false), hp_(50), ballammo_(3), throwcd_(0)
 {
     setPosition(pos);
 
@@ -36,10 +40,23 @@ void Swampman::update()
 {
     updateOrientation();
 
+    if(throwcd_) throwcd_--;
+
     if(!((up == down) && (right == left))) //if there is movement
     {
         setSpeed(5.);
         step();
+    }
+    if(throwing && ballammo_ && !throwcd_)
+    {
+        ballammo_--;
+        throwcd_ = 30;
+
+        decltype(position) ballpos = position;
+        ballpos += glm::vec2(-sin(this->orientation), cos(this->orientation)) * 32.f;
+        auto ptr = std::make_shared<Ball>(ballpos, game_, this->orientation);
+        ptr->setSpeed(5. * 1.5);
+        game_.addObject(ptr);
     }
 }
 
