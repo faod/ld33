@@ -83,10 +83,11 @@ void Swampman::processInput(ALLEGRO_EVENT ev)
     {
         switch(ev.keyboard.keycode)
         {
-            case ALLEGRO_KEY_UP:    up    = true; break;
-            case ALLEGRO_KEY_DOWN:  down  = true; break;
-            case ALLEGRO_KEY_LEFT:  left  = true; break;
-            case ALLEGRO_KEY_RIGHT: right = true; break;
+            case ALLEGRO_KEY_UP:    up       = true; break;
+            case ALLEGRO_KEY_DOWN:  down     = true; break;
+            case ALLEGRO_KEY_LEFT:  left     = true; break;
+            case ALLEGRO_KEY_RIGHT: right    = true; break;
+            case ALLEGRO_KEY_RCTRL: throwing = true; break;
             default: break;
         };
     }
@@ -94,10 +95,11 @@ void Swampman::processInput(ALLEGRO_EVENT ev)
     {
         switch(ev.keyboard.keycode)
         {
-            case ALLEGRO_KEY_UP:    up    = false; break;
-            case ALLEGRO_KEY_DOWN:  down  = false; break;
-            case ALLEGRO_KEY_LEFT:  left  = false; break;
-            case ALLEGRO_KEY_RIGHT: right = false; break;
+            case ALLEGRO_KEY_UP:    up       = false; break;
+            case ALLEGRO_KEY_DOWN:  down     = false; break;
+            case ALLEGRO_KEY_LEFT:  left     = false; break;
+            case ALLEGRO_KEY_RIGHT: right    = false; break;
+            case ALLEGRO_KEY_RCTRL: throwing = false; break;
             default: break;
         };
 

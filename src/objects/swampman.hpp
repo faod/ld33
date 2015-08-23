@@ -31,6 +31,7 @@ class Swampman : public BoxObject
         bool down;
         bool left;
         bool right;
+        bool throwing;
 
         unsigned int hp_;
 
