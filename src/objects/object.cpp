@@ -177,6 +177,9 @@ void Object::drawHull(glm::vec2 screen_ul_corner) {
 		          p2 = hull->points[i+1] - screen_ul_corner;
 		al_draw_line(p1.x, p1.y, p2.x, p2.y, col, 2.);
 	}
+	glm::vec2 p1 = hull->points[0]           - screen_ul_corner,
+	          p2 = hull->points[hull->len-1] - screen_ul_corner;
+	al_draw_line(p1.x, p1.y, p2.x, p2.y, col, 2.);
 
 	delete hull;
 }
@@ -184,9 +187,11 @@ void Object::drawHull(glm::vec2 screen_ul_corner) {
 // ----
 
 BoxObject::BoxObject(glm::vec2 v) {
-	this->convexHull.len = 2;
-	this->convexHull.points = (glm::vec2*)malloc(2*sizeof(glm::vec2));
+	this->convexHull.len = 4;
+	this->convexHull.points = (glm::vec2*)malloc(4*sizeof(glm::vec2));
 	this->convexHull.points[0] = -(v/2.f);
-	this->convexHull.points[1] = v/2.f;
+	this->convexHull.points[1] = glm::vec2(v.x/2., -v.y/2.);
+	this->convexHull.points[2] = v/2.f;
+	this->convexHull.points[3] = glm::vec2(-v.x/2., v.y/2.);
 }
 
