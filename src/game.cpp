@@ -26,8 +26,8 @@ void Game::update()
 {
     map_.update();
 
-    for(auto it = objects_.begin(); it != objects_.end(); ++it)
-        (*it)->update();
+    for(int i = 0; i < objects_.size(); ++i)
+        objects_[i]->update();
 
     auto it = std::remove(objects_.begin(), objects_.end(), nullptr);
     objects_.erase(it, objects_.end());
