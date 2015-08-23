@@ -13,9 +13,9 @@
 #define PI4_3 2.356194490192345
 
 
-float Swampman::orientations[9] = {-PI4_3, -PI, PI4_3, -PI2, 0., PI2, -PI4, 0., PI4 };
+float Swampman::orientations[9] = {PI4_3, -PI, -PI4_3, PI2, 0., -PI2, PI4, 0., -PI4 };
 
-Swampman::Swampman(glm::vec2 pos): BoxObject(glm::vec2(32.f, 32.f))
+Swampman::Swampman(glm::vec2 pos): BoxObject(glm::vec2(32.f, 32.f)) , up(false), down(false), left(false), right(false)
 {
     setPosition(pos);
 
@@ -35,6 +35,12 @@ Swampman::~Swampman()
 void Swampman::update()
 {
     updateOrientation();
+
+    if(!((up == down) && (right == left))) //if there is movement
+    {
+        setSpeed(5.);
+        step();
+    }
 }
 
 void Swampman::updateOrientation()
