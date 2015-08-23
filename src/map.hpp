@@ -34,7 +34,10 @@ class Tile
         size_t topright();
         size_t botleft();
         size_t botright();
+
+        static std::shared_ptr<ALLEGRO_BITMAP> getFlameFrame(size_t num);
     private:
+        static ALLEGRO_BITMAP *flames;
         int x_;
         int y_;
         BIOME biome_;

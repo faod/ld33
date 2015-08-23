@@ -11,6 +11,7 @@
 #include "noise/perlin.hpp"
 #include "game.hpp"
 
+ALLEGRO_BITMAP *Tile::flames = NULL;
 
 Tileset::Tileset(ALLEGRO_COLOR cl)
 {
@@ -39,6 +40,26 @@ std::shared_ptr<ALLEGRO_BITMAP> Tileset::operator<<(size_t tile)
 
 Tile::Tile(int x, int y, BIOME b) : x_(x), y_(y), biome_(b), voisins_{GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS}
 {
+}
+
+std::shared_ptr<ALLEGRO_BITMAP> Tile::getFlameFrame(size_t num)
+{
+    if(flames == NULL)
+    {
+        ALLEGRO_PATH *path;
+
+        path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+        al_append_path_component(path, RESOURCES_DIR);
+        al_set_path_filename(path, "flames.png");
+        flames = al_load_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+
+        al_destroy_path(path);
+    }
+    if(num < 3)
+    {
+        return std::shared_ptr<ALLEGRO_BITMAP>(al_create_sub_bitmap(flames, num * 32, 0, 32, 32), al_destroy_bitmap);
+    }
+    return NULL;
 }
 
 bool Tile::operator==(const BIOME &b)
