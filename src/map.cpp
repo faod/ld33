@@ -144,7 +144,9 @@ Map::Map(int width, int height, float resolution, Game& game) : width_(width),
     drawswampgrass();
 
     reseed(al_get_time() * 1000);
-    //rockgen(resolution);
+    rockgen(resolution);
+    updatevoisins();
+    drawrock();
     al_set_target_backbuffer(al_get_current_display());
 }
 
@@ -207,6 +209,30 @@ void Map::drawswampgrass()
     al_set_target_backbuffer(al_get_current_display());
 }
 
+void Map::drawrock()
+{
+    al_set_target_bitmap(bm_);
+    for(int y = 0; y < tiles_.size(); y++)
+    {
+        for(int x = 0; x < tiles_[y].size(); x++)
+        {
+            BIOME b = tiles_[y][x].getBiome();
+
+            if(b == ROCK)
+            {
+                std::shared_ptr<ALLEGRO_BITMAP> bm = rock_ << tiles_[y][x].topleft();
+                al_draw_bitmap(bm.get(), x * 32, y * 32, 0);
+                bm = rock_ << tiles_[y][x].topright();
+                al_draw_bitmap(bm.get(), x * 32 + 16, y* 32, 0);
+                bm = rock_ << tiles_[y][x].botleft();
+                al_draw_bitmap(bm.get(), x * 32, y * 32 + 16, 0);
+                bm = rock_ << tiles_[y][x].botright();
+                al_draw_bitmap(bm.get(), x * 32 + 16, y * 32 + 16, 0);
+            }
+        }
+    }
+    al_set_target_backbuffer(al_get_current_display());
+}
 void Map::swampgrassgen(float resolution)
 {
     const float max = static_cast<float>(std::max(width_, height_));
@@ -245,7 +271,6 @@ void Map::rockgen(float resolution)
             if(per < -0.4)
             {
                 tiles_[y][x] = Tile(x, y , ROCK);
-                al_draw_filled_rectangle(x * 32, y * 32, x * 32 + 32, y * 32 + 32, al_map_rgb(222, 184, 135));
             }
         }
     }

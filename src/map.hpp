@@ -56,6 +56,7 @@ class Map
         void updatevoisins();
         void rockgen(float resolution);
         void drawswampgrass();
+        void drawrock();
 
         int width_;
         int height_;
