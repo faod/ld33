@@ -23,6 +23,8 @@ Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", 
 
 void Game::update()
 {
+    map_.update();
+
     for(auto it = objects_.begin(); it != objects_.end(); ++it)
         (*it)->draw();
 }

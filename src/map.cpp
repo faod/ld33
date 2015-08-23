@@ -38,6 +38,20 @@ std::shared_ptr<ALLEGRO_BITMAP> Tileset::operator<<(size_t tile)
     return std::shared_ptr<ALLEGRO_BITMAP>(bm, al_destroy_bitmap);
 }
 
+/*******************
+ *
+ *
+ *  _______ ___       _
+ *     |     |   |   |
+ *     |     |   |   |_
+ *     |    _|_  |__ |_
+ *
+ *
+ *
+ * **************/
+
+
+
 Tile::Tile(int x, int y, BIOME b) : x_(x), y_(y), biome_(b), voisins_{GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS}
 {
 }
@@ -148,6 +162,24 @@ size_t Tile::botright()
 
     return 15;
 }
+
+void Tile::update()
+{
+
+}
+
+
+/***************
+ *               __
+ * |\_/|   /\   |  |
+ * |   |  /__\  |__|
+ * |   | /    \ |
+ *
+ *
+ *
+ * **************/
+
+
 
 Map::Map(int width, int height, float resolution, Game& game) : width_(width),
                                                                 height_(height),
@@ -297,6 +329,16 @@ void Map::rockgen(float resolution)
     }
 }
 
+void Map::update()
+{
+    for(int y = 0; y < tiles_.size(); ++y)
+    {
+        for(int x = 0; x < tiles_[y].size(); ++x)
+        {
+            tiles_[y][x].update();
+        }
+    }
+}
 
 void Map::draw(int xpos, int ypos, int w, int h)
 {

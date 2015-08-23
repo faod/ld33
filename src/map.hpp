@@ -28,6 +28,8 @@ class Tile
 
         bool operator==(const BIOME &b);
 
+        void update();
+
         void setVoisins(BIOME v[9]);
         BIOME getBiome();
         size_t topleft();
@@ -51,6 +53,7 @@ class Map
 
         Map(int width, int height, float resolution, Game& game);
 
+        void update();
         void draw(int xpos, int ypos, int w, int h);
         void toggleTile(int x, int y);
 
