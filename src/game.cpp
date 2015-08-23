@@ -26,7 +26,7 @@ void Game::update()
     map_.update();
 
     for(auto it = objects_.begin(); it != objects_.end(); ++it)
-        (*it)->draw();
+        (*it)->update();
 }
 
 
