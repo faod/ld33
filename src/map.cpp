@@ -249,37 +249,13 @@ void Map::updatevoisins()
 
 void Map::drawswampgrass()
 {
-    al_set_target_bitmap(bm_);
     for(int y = 0; y < tiles_.size(); y++)
     {
         for(int x = 0; x < tiles_[y].size(); x++)
         {
-           BIOME b = tiles_[y][x].getBiome();
-           if(b == SWAMP)
-           {
-                std::shared_ptr<ALLEGRO_BITMAP> bm = swamp_ << tiles_[y][x].topleft();
-                al_draw_bitmap(bm.get(), x * 32, y * 32, 0);
-                bm = swamp_ << tiles_[y][x].topright();
-                al_draw_bitmap(bm.get(), x * 32 + 16, y * 32, 0);
-                bm = swamp_ << tiles_[y][x].botleft();
-                al_draw_bitmap(bm.get(), x * 32, y * 32 + 16, 0);
-                bm = swamp_ << tiles_[y][x].botright();
-                al_draw_bitmap(bm.get(), x * 32 + 16, y * 32 + 16, 0);
-           }
-           else if(b == GRASS)
-           {
-                std::shared_ptr<ALLEGRO_BITMAP> bm = grass_ << tiles_[y][x].topleft();
-                al_draw_bitmap(bm.get(), x * 32, y * 32, 0);
-                bm = grass_ << tiles_[y][x].topright();
-                al_draw_bitmap(bm.get(), x * 32 + 16, y * 32, 0);
-                bm = grass_ << tiles_[y][x].botleft();
-                al_draw_bitmap(bm.get(), x * 32, y * 32 + 16, 0);
-                bm = grass_ << tiles_[y][x].botright();
-                al_draw_bitmap(bm.get(), x * 32 + 16, y * 32 + 16, 0);
-           }
+            drawTile(tiles_[y][x], nullptr);
         }
     }
-    al_set_target_backbuffer(al_get_current_display());
 }
 
 void Map::drawrock()
@@ -359,7 +335,7 @@ void Map::update()
             tiles_[y][x].update(*this);
             if(start)
             {
-                tiles_[y][x].ignite(1000);
+                //tiles_[y][x].ignite(1000);
             }
         }
     }
@@ -416,7 +392,7 @@ void Map::drawTile(const Tile &t, std::shared_ptr<ALLEGRO_BITMAP> ptr)
     al_draw_bitmap(bm.get(), t.getx() * 32, t.gety() * 32 + 16, 0);
     bm = *ts << t.botright();
     al_draw_bitmap(bm.get(), t.getx() * 32 + 16, t.gety() * 32 + 16, 0);
- 
+
     if(ptr != nullptr)
     {
         al_draw_bitmap(ptr.get(), t.getx() * 32, t.gety() * 32, 0);
