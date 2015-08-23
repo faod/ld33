@@ -17,3 +17,9 @@ build/
 
 #temp files
 *.swp
+
+# Config file
+*.cfg
+
+# Logs
+*.log
