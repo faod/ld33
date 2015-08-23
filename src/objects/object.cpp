@@ -105,8 +105,16 @@ void Object::updatePosition(glm::vec2 &delta) {
 	this->position += delta;
 }
 
+void Object::step() {
+	this->position += glm::vec2(-sin(this->orientation), cos(this->orientation)) * speed;
+}
+
 void Object::setPosition(glm::vec2 &pos) {
 	this->position = pos;
+}
+
+void Object::setSpeed(float speed) {
+	this->speed = speed;
 }
 
 bool Object::collide(Object &other) {
@@ -121,7 +129,7 @@ bool Object::willCollide(Object &other) {
 	ConvexHull *c1 = new ConvexHull(this->convexHull);
 	ConvexHull *c2 = other.getConvexHull();
 	c1->rotate(this->orientation);
-	c1->translate(this->position + glm::vec2(-sin(this->orientation), cos(this->orientation)));
+	c1->translate(this->position + glm::vec2(-sin(this->orientation), cos(this->orientation)) * speed);
 	bool res = c1->intersects(*c2);
 	delete c1; delete c2;
 	return res;

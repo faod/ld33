@@ -47,8 +47,14 @@ public:
 	/// Append the given coordinates to this object's position
 	virtual void updatePosition(glm::vec2 &delta);
 
+	/// Moves this object in the current orientation at the current speed
+	virtual void step();
+
 	/// Sets the global position
 	virtual void setPosition(glm::vec2 &pos);
+
+	/// Sets the speed for this object
+	virtual void setSpeed(float speed);
 
 	/// Returns `true` if the given object collides with this object
 	virtual bool collide(Object &other);
