@@ -5,10 +5,12 @@
 
 #include "object.hpp"
 
+class Game;
+
 class Swampman : public BoxObject
 {
     public: 
-        Swampman(glm::vec2 position);
+        Swampman(glm::vec2 position, Game &g);
         ~Swampman();
 
         static float orientations[9];
@@ -22,6 +24,8 @@ class Swampman : public BoxObject
 
     private:
         ALLEGRO_BITMAP *sprite_;
+
+        Game &game_;
 
         bool up;
         bool down;

@@ -16,7 +16,7 @@ Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", 
                                      atof(al_get_config_value(main_.config, "", "perlin_resolution")),
                                      *this)
 {
-    std::shared_ptr<Swampman> ptr = std::make_shared<Swampman, glm::vec2>(glm::vec2(800., 300.));
+    std::shared_ptr<Swampman> ptr = std::make_shared<Swampman, glm::vec2>(glm::vec2(800., 300.), *this);
     addObject(ptr);
     swampman_ = ptr;
 }

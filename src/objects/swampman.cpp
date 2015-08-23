@@ -15,7 +15,7 @@
 
 float Swampman::orientations[9] = {PI4_3, -PI, -PI4_3, PI2, 0., -PI2, PI4, 0., -PI4 };
 
-Swampman::Swampman(glm::vec2 pos): BoxObject(glm::vec2(32.f, 32.f)) , up(false), down(false), left(false), right(false), hp_(50)
+Swampman::Swampman(glm::vec2 pos, Game &g): BoxObject(glm::vec2(32.f, 32.f)) , game_(g), up(false), down(false), left(false), right(false), hp_(50)
 {
     setPosition(pos);
 
