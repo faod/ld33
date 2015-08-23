@@ -63,7 +63,6 @@ class Map
 
         void update();
         void draw(int xpos, int ypos, int w, int h);
-        void toggleTile(int x, int y);
         void drawTile(const Tile &t, std::shared_ptr<ALLEGRO_BITMAP> mask = nullptr);
     private:
         void swampgrassgen(float resolution);

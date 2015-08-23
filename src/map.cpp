@@ -340,27 +340,6 @@ void Map::draw(int xpos, int ypos, int w, int h)
     al_draw_bitmap_region(bm_, xpos, ypos, w, h, 0, 0, 0);
 }
 
-void Map::toggleTile(int x, int y)
-{
- /*   if(tiles_[x][y] == ROCK)
-        return;
-
-    al_set_target_bitmap(bm_);
-
-    ALLEGRO_COLOR cl;
-    if( tiles_[x][y] == SWAMP)
-    {
-        tiles_[x][y] = GRASS;
-        cl = al_map_rgb(255, 255, 0);
-    }
-    else
-    {
-        tiles_[x][y] = SWAMP;
-        cl = al_map_rgb(0, 255, 0);
-    }
-    al_draw_filled_rectangle(x * 32, y * 32, x * 32 + 32, y * 32 + 32, cl);
-    al_set_target_backbuffer(al_get_current_display());*/
-}
 
 void Map::drawTile(const Tile &t, std::shared_ptr<ALLEGRO_BITMAP> ptr)
 {
