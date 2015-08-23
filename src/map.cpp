@@ -52,7 +52,7 @@ std::shared_ptr<ALLEGRO_BITMAP> Tileset::operator<<(size_t tile)
 
 
 
-Tile::Tile(int x, int y, BIOME b) : x_(x), y_(y), biome_(b), voisins_{GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS}
+Tile::Tile(int x, int y, BIOME b) : x_(x), y_(y), biome_(b), voisins_{GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS}, ignitetime_(0)
 {
 }
 
@@ -86,12 +86,12 @@ void Tile::setVoisins(BIOME v[9])
     for(int i = 0; i < 9; ++i) voisins_[i] = v[i];
 }
 
-BIOME Tile::getBiome()
+BIOME Tile::getBiome() const
 {
     return biome_;
 }
 
-size_t Tile::topleft()
+size_t Tile::topleft() const
 {
     if(voisins_[0] != biome_ && voisins_[1] != biome_ && voisins_[3] != biome_)
         return 2;
@@ -108,7 +108,7 @@ size_t Tile::topleft()
     return 11;
 }
 
-size_t Tile::topright()
+size_t Tile::topright() const
 {
     if(voisins_[1] != biome_ && voisins_[2] != biome_ && voisins_[5] != biome_)
         return 3;
@@ -127,7 +127,7 @@ size_t Tile::topright()
 
 }
 
-size_t Tile::botleft()
+size_t Tile::botleft() const
 {
     if(voisins_[3] != biome_ && voisins_[6] != biome_ && voisins_[7] != biome_)
         return 6;
@@ -145,7 +145,7 @@ size_t Tile::botleft()
 
 }
 
-size_t Tile::botright()
+size_t Tile::botright() const
 {
 
     if(voisins_[5] != biome_ && voisins_[8] != biome_ && voisins_[7] != biome_)
@@ -163,9 +163,29 @@ size_t Tile::botright()
     return 15;
 }
 
-void Tile::update()
+void Tile::update(Map &m)
 {
+    if(biome_ == SWAMP && ignitetime_)
+    {
+        ignitetime_--;
 
+        if(ignitetime_ == 0)
+        {
+            //metamorphose
+        }
+        else
+        {
+            m.drawTile(*this, getFlameFrame(ignitetime_ % 3));
+        }
+    }
+}
+
+void Tile::ignite(unsigned int time)
+{
+    if(biome_ == SWAMP)
+    {
+        ignitetime_ = time;
+    }
 }
 
 
@@ -331,13 +351,19 @@ void Map::rockgen(float resolution)
 
 void Map::update()
 {
+    static bool start = true;
     for(int y = 0; y < tiles_.size(); ++y)
     {
         for(int x = 0; x < tiles_[y].size(); ++x)
         {
-            tiles_[y][x].update();
+            tiles_[y][x].update(*this);
+            if(start)
+            {
+                tiles_[y][x].ignite(1000);
+            }
         }
     }
+                start = false;
 }
 
 void Map::draw(int xpos, int ypos, int w, int h)
@@ -365,4 +391,35 @@ void Map::toggleTile(int x, int y)
     }
     al_draw_filled_rectangle(x * 32, y * 32, x * 32 + 32, y * 32 + 32, cl);
     al_set_target_backbuffer(al_get_current_display());*/
+}
+
+void Map::drawTile(const Tile &t, std::shared_ptr<ALLEGRO_BITMAP> ptr)
+{
+    std::shared_ptr<ALLEGRO_BITMAP> bm;
+    Tileset* ts = nullptr;
+
+    switch(t.getBiome())
+    {
+        case GRASS: ts = &grass_; break;
+        case SWAMP: ts = &swamp_; break;
+        case ROCK:  ts = &rock_;  break;
+        default: break;
+    };
+
+    al_set_target_bitmap(bm_);
+
+    bm = *ts << t.topleft();
+    al_draw_bitmap(bm.get(), t.getx() * 32, t.gety() * 32, 0);
+    bm = *ts << t.topright();
+    al_draw_bitmap(bm.get(), t.getx() * 32 + 16, t.gety() * 32, 0);
+    bm = *ts << t.botleft();
+    al_draw_bitmap(bm.get(), t.getx() * 32, t.gety() * 32 + 16, 0);
+    bm = *ts << t.botright();
+    al_draw_bitmap(bm.get(), t.getx() * 32 + 16, t.gety() * 32 + 16, 0);
+ 
+    if(ptr != nullptr)
+    {
+        al_draw_bitmap(ptr.get(), t.getx() * 32, t.gety() * 32, 0);
+    }
+    al_set_target_backbuffer(al_get_current_display());
 }

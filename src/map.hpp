@@ -21,6 +21,8 @@ class Tileset
         ALLEGRO_BITMAP* spritesheet_;
         std::vector<ALLEGRO_BITMAP*> tiles_;
 };
+
+class Map;
 class Tile
 {
     public:
@@ -28,14 +30,19 @@ class Tile
 
         bool operator==(const BIOME &b);
 
-        void update();
+        void update(Map &m);
+        void ignite(unsigned int time);
+
+
+        inline int getx() const { return x_; };
+        inline int gety() const { return y_; };
 
         void setVoisins(BIOME v[9]);
-        BIOME getBiome();
-        size_t topleft();
-        size_t topright();
-        size_t botleft();
-        size_t botright();
+        BIOME getBiome() const;
+        size_t topleft() const;
+        size_t topright() const;
+        size_t botleft() const;
+        size_t botright() const;
 
         static std::shared_ptr<ALLEGRO_BITMAP> getFlameFrame(size_t num);
     private:
@@ -44,6 +51,7 @@ class Tile
         int y_;
         BIOME biome_;
         BIOME voisins_[9];
+        unsigned int ignitetime_;
 };
 
 class Map
@@ -56,7 +64,7 @@ class Map
         void update();
         void draw(int xpos, int ypos, int w, int h);
         void toggleTile(int x, int y);
-
+        void drawTile(const Tile &t, std::shared_ptr<ALLEGRO_BITMAP> mask = nullptr);
     private:
         void swampgrassgen(float resolution);
         void updatevoisins();
