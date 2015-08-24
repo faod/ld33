@@ -17,6 +17,14 @@ class Swampman;
 
 class Game {
 public:
+    Main& main_;
+    std::vector<std::shared_ptr<Object>> objects_;
+    std::shared_ptr<Swampman> swampman_;
+    std::shared_ptr<Menu>     menu_;
+    Map map_;
+
+    bool playing;
+
     Game(Main& m);
 
     static void *startInput(ALLEGRO_THREAD* t, void* arg);
@@ -30,15 +38,6 @@ public:
 
     void removeObject(std::shared_ptr<Object> obj);
     void addObject(std::shared_ptr<Object> obj);
-
-private:
-    Main& main_;
-    std::vector<std::shared_ptr<Object>> objects_;
-    std::shared_ptr<Swampman> swampman_;
-    std::shared_ptr<Menu>     menu_;
-    Map map_;
-
-    bool playing;
 };
 
 #endif
