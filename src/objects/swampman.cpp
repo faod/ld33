@@ -120,12 +120,12 @@ void Swampman::processInput(ALLEGRO_EVENT ev)
     }
 }
 
-void Swampman::drawHUD(int width, int height)
+void Swampman::drawHUD(int topx, int topy)
 {
     //draw health bar rect
-    al_draw_rectangle(20., 20., 100., 30., al_map_rgb(186, 54, 54), 1.);
+    al_draw_rectangle(topx + 20., topy + 20., topx + 80., topy + 30., al_map_rgb(186, 54, 54), 1.);
 
-    al_draw_filled_rectangle(20. , 20. , 20. + (hp_ / 100. * 80), 30., al_map_rgb(241, 31, 31));
+    al_draw_filled_rectangle(topx + 20. , topy + 20. , topx + 20. + (hp_ / 100. * 60), topy + 30., al_map_rgb(241, 31, 31));
 
-    al_draw_textf(Main::main_font, al_map_rgb(241, 31, 31), 110., 22., 0, "%d",hp_);
+    al_draw_textf(Main::main_font, al_map_rgb(241, 31, 31), topx + 110., topy + 22., 0, "%d",hp_);
 }

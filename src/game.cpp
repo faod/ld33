@@ -36,6 +36,8 @@ Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", 
     
     menu_   = std::make_shared<Menu>(m.screen_w, m.screen_h, *this);
     playing = false;
+
+    tmp_ = al_create_bitmap(main_.screen_w, main_.screen_h);
 }
 
 void Game::update()
@@ -61,6 +63,9 @@ void Game::refresh()
 {
     if(playing)
     {
+        al_set_target_bitmap(tmp_);
+        al_clear_to_color(al_map_rgb(55, 55, 55));
+
         glm::vec2 smpos = swampman_->getPosition();
         map_.draw(static_cast<int>(smpos[0]) - main_.screen_w / 2.,
               static_cast<int>(smpos[1]) - main_.screen_h / 2.,
@@ -70,7 +75,10 @@ void Game::refresh()
             (*it)->draw(glm::vec2(static_cast<int>(smpos.x) - main_.screen_w / 2.,
                               static_cast<int>(smpos.y) - main_.screen_h / 2.));
 
-        swampman_->drawHUD(main_.screen_w, main_.screen_h);
+        swampman_->drawHUD(main_.screen_w / 4, main_.screen_h / 4);
+
+        al_set_target_backbuffer(al_get_current_display());
+        al_draw_scaled_bitmap(tmp_, main_.screen_w / 4, main_.screen_h / 4, main_.screen_w / 2, main_.screen_h / 2, 0, 0, main_.screen_w, main_.screen_h, 0);
      }
      else
      {

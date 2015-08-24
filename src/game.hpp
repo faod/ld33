@@ -22,6 +22,8 @@ public:
     std::shared_ptr<Swampman> swampman_;
     std::shared_ptr<Menu>     menu_;
     Map map_;
+    ALLEGRO_BITMAP *tmp_;
+
 
     bool playing;
 
