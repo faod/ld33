@@ -26,6 +26,7 @@ Swampman::Swampman(glm::vec2 pos, Game &g): BoxObject(glm::vec2(30.f, 20.f)) , g
     al_set_path_filename(path, "swampman.png");
     sprite_ = al_load_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
 
+    al_destroy_path(path);
 }
 Swampman::~Swampman()
 {
