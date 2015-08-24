@@ -69,13 +69,16 @@ public:
 	/// Returns the axis aligned bounding box for this object (x, y, width, height)
 	virtual glm::vec4 getBoundingBox();
 
-    virtual void update();
+	/// For animation/logic purposes
+	virtual void update();
 
-    virtual void draw(glm::vec2 screen_ul_corner);
+	/// Draws that object onto the current target
+	virtual void draw(glm::vec2 screen_ul_corner);
 
-    virtual void drawHull(glm::vec2 screen_ul_corner);
+	/// Draws the convexHull onto the current target (for debugging purposes)
+	virtual void drawHull(glm::vec2 screen_ul_corner);
 
-    virtual ~Object() {};
+	virtual ~Object() {};
 };
 
 // ----

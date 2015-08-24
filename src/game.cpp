@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <memory>
+#include <cstdlib>
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
@@ -10,6 +11,7 @@
 
 #include "game.hpp"
 #include "objects/swampman.hpp"
+#include "objects/villager.hpp"
 
 
 Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", "map_width")),
@@ -20,6 +22,16 @@ Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", 
     std::shared_ptr<Swampman> ptr = std::make_shared<Swampman, glm::vec2>(glm::vec2(800., 300.), *this);
     addObject(ptr);
     swampman_ = ptr;
+
+    glm::vec2 v;
+    std::srand(al_get_time()*1000);
+    for (int i=0; i<10; i++) {
+        do {
+            v = glm::vec2(std::rand() % map_.getWidth() * 32 + 16, std::rand() % map_.getHeight() * 32 + 16);
+        } while (map_.what(v.x, v.y) != GRASS);
+
+        addObject(std::make_shared<Villager, glm::vec2&>(v, *this));
+    }
 }
 
 void Game::update()

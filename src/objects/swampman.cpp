@@ -15,16 +15,16 @@
 
 float Swampman::orientations[9] = {PI4_3, -PI, -PI4_3, PI2, 0., -PI2, PI4, 0., -PI4 };
 
-Swampman::Swampman(glm::vec2 pos, Game &g): BoxObject(glm::vec2(32.f, 32.f)) , game_(g), up(false), down(false), left(false), right(false), throwing(false), hp_(100), ballammo_(3), throwcd_(0)
+Swampman::Swampman(glm::vec2 pos, Game &g): BoxObject(glm::vec2(30.f, 20.f)) , game_(g), up(false), down(false), left(false), right(false), throwing(false), hp_(100), ballammo_(3), throwcd_(0)
 {
     setPosition(pos);
 
-    sprite_ = al_create_bitmap(32, 32);
-    al_set_target_bitmap(sprite_);
+    ALLEGRO_PATH *path;
 
-    al_draw_filled_rectangle(0, 0, 32, 32, al_map_rgb(255, 0, 0));
-    al_draw_filled_rectangle(14, 26, 18 , 30 , al_map_rgb(0  , 255, 0));
-    al_set_target_backbuffer(al_get_current_display());
+    path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+    al_append_path_component(path, RESOURCES_DIR);
+    al_set_path_filename(path, "swampman.png");
+    sprite_ = al_load_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
 
 }
 Swampman::~Swampman()
@@ -79,11 +79,11 @@ void Swampman::updateOrientation()
 void Swampman::draw(glm::vec2 screen_ul_corner)
 {
     al_draw_rotated_bitmap(sprite_,
-                           16,
-                           16,
+                           15,
+                           10,
                            this->position.x - screen_ul_corner.x,
                            this->position.y - screen_ul_corner.y,
-                           orientation,
+                           orientation + PI,
                             0);
     drawHull(screen_ul_corner);
 

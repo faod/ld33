@@ -210,7 +210,7 @@ void Tile::setVoisins(int id, BIOME b)
 
 Map::Map(int width, int height, float resolution, Game& game) : width_(width),
                                                                 height_(height),
-                                                                grass_(al_map_rgb(106, 190, 48)),
+                                                                grass_(al_map_rgb(15, 56, 15)),
                                                                 swamp_("swamp.png"),
                                                                 rock_("rocks.png"),
                                                                 tiles_(height_, std::vector<Tile>(width_)),
@@ -265,6 +265,14 @@ void Map::drawswampgrass()
     }
 }
 
+BIOME Map::what(int x, int y) {
+	return tiles_[y][x].getBiome();
+}
+
+BIOME Map::what(float x, float y) {
+	return tiles_[y/32.][x/32.].getBiome();
+}
+
 void Map::updatevoisins(int x, int y)
 {
     BIOME b = tiles_[y][x].getBiome();
@@ -316,6 +324,14 @@ void Map::updatevoisins(int x, int y)
         if(tiles_[y + 1][x + 1].getBiome() == SWAMP)
             drawTile(tiles_[y + 1][x + 1], nullptr);
     }
+}
+
+int Map::getWidth() {
+	return this->width_;
+}
+
+int Map::getHeight() {
+	return this->height_;
 }
 
 void Map::drawrock()
