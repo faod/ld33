@@ -111,6 +111,7 @@ void Swampman::update()
         else if(t.getBiome() == SWAMP)
         {
             setSpeed(2.4);
+            ballammo_ = 3;
         }
         step();
     }
