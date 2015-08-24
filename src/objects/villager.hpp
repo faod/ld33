@@ -10,7 +10,16 @@
 
 class Villager: public BoxObject {
 	static ALLEGRO_BITMAP *sprite, *flames_spawn, *flames_loop;
+	static TriObject fov;
 	Game &game;
+	enum {
+		NONE,
+		DRYING,
+		CHASING,
+		ELOPING,
+		ROAMING,
+		FIRING
+	} status;
 
 public:
 	Villager(glm::vec2 spawnPosition, Game &game);
