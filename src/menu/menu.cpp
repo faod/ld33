@@ -21,6 +21,10 @@ Menu::Menu(int width, int height) : width_(width), height_(height)
     bm_ = al_load_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
     if(!bm_) throw Failure("failed to load menu bitmap");
     al_destroy_path(path);
+
+    al_set_target_bitmap(bm_);
+    al_draw_text(Main::main_font, al_map_rgb(255, 0, 0), 128 / 2, 128 / 2, ALLEGRO_ALIGN_CENTRE, "PRESS SPACE");
+    al_set_target_backbuffer(al_get_current_display());
 }
 
 Menu::~Menu()
@@ -37,6 +41,7 @@ void Menu::draw()
 {
     al_clear_to_color(al_map_rgb(0, 0, 0));
     al_draw_scaled_bitmap(bm_, 0, 0, 128, 128, (width_ / 2) - (128 * 2), (height_ / 2) - (128 * 2), 128 * 4, 128 * 4, 0);
+
 }
 
 void Menu::update()
