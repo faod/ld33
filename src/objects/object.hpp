@@ -47,6 +47,9 @@ public:
 	/// Append the given coordinates to this object's position
 	virtual void updatePosition(glm::vec2 &delta);
 
+	/// Sets the orientation so then any call to `step` will move this object towards the given position
+	virtual void gotoPosition(glm::vec2 togo);
+
 	/// Moves this object in the current orientation at the current speed
 	virtual void step();
 

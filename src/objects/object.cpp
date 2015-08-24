@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 
 #include "../failure.hpp"
+#include "../misc/defines.hpp"
 #include "object.hpp"
 
 using std::malloc;
@@ -58,8 +59,8 @@ void ConvexHull::rotate(float orient) {
 	}
 }
 
-#define m_sign(x) ((x) >= 0 ? 1. : -1.)
 bool ConvexHull::intersects(ConvexHull &other) {
+	bool isIn;
 	float sign;
 	int i, j;
 	glm::vec2 pA, pB, pC;
@@ -77,22 +78,27 @@ bool ConvexHull::intersects(ConvexHull &other) {
 		vAC = pC - pA;
 
 		sign = m_sign(vAB.x * vAC.y - vAB.y * vAC.x);
+		isIn = true;
 
 		// for each segment of this hull
 		for (j=0; j<this->len-1; j++) {
 			// if the point is not at the same side of each segment
-			pA = this->points[this->len-1];
-			pB = this->points[0];
+			pA = this->points[j];
+			pB = this->points[j+1];
 
 			vAB = pB - pA;
 			vAC = pC - pA;
 
 			if (sign != m_sign(vAB.x * vAC.y - vAB.y * vAC.x)) {
-				return false; // it is not inside this hull
+				isIn = false; // it is not inside this hull
+				break;
 			}
 		}
+		if (isIn) {
+			return true;
+		}
 	}
-	return true;
+	return false;
 }
 
 // ----
@@ -103,6 +109,12 @@ glm::vec2 Object::getPosition() {
 
 void Object::updatePosition(glm::vec2 &delta) {
 	this->position += delta;
+}
+
+void Object::gotoPosition(glm::vec2 togo) {
+	glm::vec2 v = glm::normalize(togo - this->position);
+	this->orientation = glm::acos(glm::dot(glm::vec2(0., 1.), v));
+	this->orientation *= -m_sign(v.x);
 }
 
 void Object::step() {

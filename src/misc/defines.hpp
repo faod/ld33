@@ -18,4 +18,6 @@
 // sqrt(X)
 #define SQRT2 1.4142135623730951
 
+#define m_sign(x) ((x) >= 0 ? 1. : -1.)
+
 #endif // DEF_HPP
