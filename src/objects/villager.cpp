@@ -82,6 +82,7 @@ Villager::Villager(glm::vec2 spawnPosition, Game &game): Character(glm::vec2(30,
 	this->status = NONE;
 	this->statusDate = 0L;
 	this->hp = 100;
+	this->flame = NULL;
 
 	if (this->sprite == NULL) {
 		ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
@@ -119,6 +120,8 @@ void Villager::update() {
 					if (collide(*(game.objects_[i]))) {
 						ball->deactivate();
 						hp -= 30;
+						this->game.removeObject(this->flame);
+						this->flame = NULL;
 						if (hp <= 0) {
 							game.removeObject(ptr);
 							return;
@@ -142,7 +145,7 @@ void Villager::update() {
 	Villager::fov.setOrientation(this->orientation);
 
 	// IA code
-	if (status == NONE) {
+	if (status == NONE || status == ROAMING) {
 		if (Villager::fov.collide(*(this->game.swampman_))) {
 			if ((char)(al_get_time()*1000.) & 0x01) {
 				setStatus(CHASING);
@@ -153,6 +156,9 @@ void Villager::update() {
 				fleeSwampman();
 			}
 		}
+		else {
+			setStatus(ROAMING);
+		}
 	}
 
 	else if (status == CHASING) {
@@ -162,6 +168,7 @@ void Villager::update() {
 			if (dist < 64*64) {
 				setStatus(FIRING);
 				auto ptr = std::make_shared<Flame>(this->position, game, this->orientation);
+				this->flame = ptr;
 				game.addObject(ptr);
 			}
 			else {
@@ -182,9 +189,10 @@ void Villager::update() {
 		}
 	}
 
-	else if (status == FIRING) {
+	else if (status == FIRING || status == DRYING) {
 		if ((long)(al_get_time() * 1000) > this->statusDate+4000) {
 			setStatus(NONE);
+			this->flame = NULL;
 		}
 	}
 }

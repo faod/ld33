@@ -39,6 +39,7 @@ class Villager: public Character, public std::enable_shared_from_this<Villager> 
 	} status;
 	long statusDate; // since date of the current status in milliseconds
 	int hp; // health
+	std::shared_ptr<Flame> flame; // Not null if there is a flame
 
 	void setStatus(Villager::Status status);
 	void chaseSwampman();
