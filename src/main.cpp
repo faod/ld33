@@ -99,6 +99,7 @@ Main::Main() {
     ALLEGRO_BITMAP *bigger = al_create_bitmap(al_get_bitmap_width(fbm) * 2, al_get_bitmap_height(fbm) * 2);
 
     al_set_target_bitmap(bigger);
+    al_clear_to_color(al_map_rgba_f(0., 0., 0., 0.));
     al_draw_scaled_bitmap(fbm, 0, 0, al_get_bitmap_width(fbm), al_get_bitmap_height(fbm), 0, 0, al_get_bitmap_width(fbm) * 2, al_get_bitmap_height(fbm) * 2, 0);
     al_destroy_bitmap(fbm);
 
