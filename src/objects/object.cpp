@@ -117,6 +117,14 @@ void Object::setSpeed(float speed) {
 	this->speed = speed;
 }
 
+void Object::setOrientation(float orient) {
+	this->orientation = orient;
+}
+
+float Object::getOrientation() {
+	return this->orientation;
+}
+
 bool Object::collide(Object &other) {
 	ConvexHull *c1 = getConvexHull();
 	ConvexHull *c2 = other.getConvexHull();
@@ -201,5 +209,16 @@ BoxObject::BoxObject(glm::vec2 v) {
 	this->convexHull.points[1] = glm::vec2(v.x/2., -v.y/2.);
 	this->convexHull.points[2] = v/2.f;
 	this->convexHull.points[3] = glm::vec2(-v.x/2., v.y/2.);
+}
+
+// ----
+
+// Isoscele triangle with its first point at (0, 0)
+TriObject::TriObject(float width, float height, float rotation) {
+	this->convexHull.len = 3;
+	this->convexHull.points = (glm::vec2*)malloc(3*sizeof(glm::vec2));
+	this->convexHull.points[0] = glm::vec2(0.);
+	this->convexHull.points[1] = glm::vec2(-(width/2.), height);
+	this->convexHull.points[2] = glm::vec2( (width/2.), height);
 }
 

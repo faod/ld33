@@ -15,7 +15,7 @@ public:
 	~ConvexHull();
 
 	void translate(glm::vec2 tr);
-	void rotate(float orient); /// North counter-clock-wise rotation in radians
+	void rotate(float orient); /// Counter-clock-wise rotation in radians
 
 	bool intersects(ConvexHull &other);
 };
@@ -53,6 +53,12 @@ public:
 	/// Sets the global position
 	virtual void setPosition(glm::vec2 &pos);
 
+	/// Sets the orientation (radians)
+	virtual void setOrientation(float orient);
+
+	/// Returns the orientation in radians
+	virtual float getOrientation();
+
 	/// Sets the speed for this object
 	virtual void setSpeed(float speed);
 
@@ -86,6 +92,12 @@ public:
 class BoxObject: public Object {
 public:
 	BoxObject(glm::vec2 wh);
+};
+
+// Triangle shape
+class TriObject: public Object {
+public:
+	TriObject(float width, float height, float rotation);
 };
 
 #endif // OBJ_HPP
