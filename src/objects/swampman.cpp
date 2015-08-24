@@ -11,12 +11,7 @@
 #include "swampman.hpp"
 #include "ball.hpp"
 #include "../game.hpp"
-
-#define PI 3.141592653589793
-#define PI2 1.5707963267948966
-#define PI4 0.7853981633974483
-#define PI4_3 2.356194490192345
-
+#include "../misc/defines.hpp"
 
 float Swampman::orientations[9] = {PI4_3, -PI, -PI4_3, PI2, 0., -PI2, PI4, 0., -PI4 };
 
