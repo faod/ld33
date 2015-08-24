@@ -265,12 +265,12 @@ void Map::drawswampgrass()
     }
 }
 
-BIOME Map::what(int x, int y) {
-	return tiles_[y][x].getBiome();
+Tile Map::what(int x, int y) {
+	return tiles_[y][x];
 }
 
-BIOME Map::what(float x, float y) {
-	return tiles_[y/32.][x/32.].getBiome();
+Tile Map::what(float x, float y) {
+	return tiles_[y/32.][x/32.];
 }
 
 void Map::updatevoisins(int x, int y)
@@ -404,7 +404,7 @@ void Map::update()
             tiles_[y][x].update(*this);
             if(start && x % 2)
             {
-                tiles_[y][x].ignite(100);
+                tiles_[y][x].ignite(10000);
             }
         }
     }

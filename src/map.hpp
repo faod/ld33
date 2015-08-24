@@ -66,8 +66,8 @@ class Map
         void draw(int xpos, int ypos, int w, int h);
         void drawTile(const Tile &t, std::shared_ptr<ALLEGRO_BITMAP> mask = nullptr);
         void updatevoisins(int x, int y);
-        BIOME what(int x, int y); // Tile coords
-        BIOME what(float x, float y); // absolute coords
+        Tile what(int x, int y); // Tile coords
+        Tile what(float x, float y); // absolute coords
         int getWidth();
         int getHeight();
     private:
