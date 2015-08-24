@@ -32,6 +32,7 @@ public:
     static void *startInput(ALLEGRO_THREAD* t, void* arg);
 
     static ALLEGRO_VOICE *voice;
+    static ALLEGRO_AUDIO_STREAM *str;
 
     void input(ALLEGRO_THREAD* t);
     void update();
