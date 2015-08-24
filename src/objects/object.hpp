@@ -95,6 +95,7 @@ public:
 class BoxObject: public Object {
 public:
 	BoxObject(glm::vec2 wh);
+	BoxObject(glm::vec2 wh, glm::vec2 shift);
 };
 
 // Triangle shape

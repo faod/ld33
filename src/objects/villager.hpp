@@ -6,10 +6,27 @@
 #include "swampman.hpp"
 #include "../misc/defines.hpp"
 
+#include <memory>
 #include <allegro5/allegro.h>
 
+/// A flamethrower's flame
+class Flame: public BoxObject, public std::enable_shared_from_this<Flame> {
+	static ALLEGRO_BITMAP *flames_spawn, *flames_loop;
+
+	Game& game;
+	long startTime;
+
+public:
+	Flame(glm::vec2 position, Game &g, float orientation);
+
+	virtual void draw(glm::vec2 screen_ul_corner);
+	virtual void update();
+};
+
+// ----
+
 class Villager: public Character {
-	static ALLEGRO_BITMAP *sprite, *flames_spawn, *flames_loop;
+	static ALLEGRO_BITMAP *sprite;
 	static TriObject fov;
 
 	enum Status {

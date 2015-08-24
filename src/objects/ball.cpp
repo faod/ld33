@@ -48,5 +48,7 @@ void Ball::draw(glm::vec2 screen_ul_corner)
                            this->position.y - screen_ul_corner.y,
                            orientation,
                            0);
+#ifdef _DEBUG
     drawHull(screen_ul_corner);
+#endif //_DEBUG
 }

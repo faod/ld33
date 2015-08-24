@@ -223,6 +223,11 @@ BoxObject::BoxObject(glm::vec2 v) {
 	this->convexHull.points[3] = glm::vec2(-v.x/2., v.y/2.);
 }
 
+
+BoxObject::BoxObject(glm::vec2 v, glm::vec2 s): BoxObject(v) {
+	this->convexHull.translate(s);
+}
+
 // ----
 
 // Isoscele triangle with its first point at (0, 0)
