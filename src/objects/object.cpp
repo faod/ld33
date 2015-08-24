@@ -107,7 +107,7 @@ glm::vec2 Object::getPosition() {
 	return this->position;
 }
 
-void Object::updatePosition(glm::vec2 &delta) {
+void Object::updatePosition(glm::vec2 delta) {
 	this->position += delta;
 }
 
@@ -121,7 +121,7 @@ void Object::step() {
 	this->position += glm::vec2(-sin(this->orientation), cos(this->orientation)) * speed;
 }
 
-void Object::setPosition(glm::vec2 &pos) {
+void Object::setPosition(glm::vec2 pos) {
 	this->position = pos;
 }
 

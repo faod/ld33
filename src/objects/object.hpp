@@ -45,7 +45,7 @@ public:
 	virtual glm::vec2 getPosition();
 
 	/// Append the given coordinates to this object's position
-	virtual void updatePosition(glm::vec2 &delta);
+	virtual void updatePosition(glm::vec2 delta);
 
 	/// Sets the orientation so then any call to `step` will move this object towards the given position
 	virtual void gotoPosition(glm::vec2 togo);
@@ -54,7 +54,7 @@ public:
 	virtual void step();
 
 	/// Sets the global position
-	virtual void setPosition(glm::vec2 &pos);
+	virtual void setPosition(glm::vec2 pos);
 
 	/// Sets the orientation (radians)
 	virtual void setOrientation(float orient);
