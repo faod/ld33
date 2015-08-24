@@ -10,6 +10,7 @@
 
 #include "main.hpp"
 #include "map.hpp"
+#include "menu/menu.hpp"
 #include "objects/object.hpp"
 
 class Swampman;
@@ -31,7 +32,10 @@ private:
     Main& main_;
     std::vector<std::shared_ptr<Object>> objects_;
     std::shared_ptr<Swampman> swampman_;
+    std::shared_ptr<Menu>     menu_;
     Map map_;
+
+    bool playing;
 };
 
 #endif

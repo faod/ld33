@@ -10,6 +10,7 @@
 
 #include "menu.hpp"
 #include "../main.hpp"
+#include "../failure.hpp"
 
 Menu::Menu(int width, int height) : width_(width), height_(height)
 {
@@ -17,7 +18,8 @@ Menu::Menu(int width, int height) : width_(width), height_(height)
     path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
     al_append_path_component(path, RESOURCES_DIR);
     al_set_path_filename(path, "home.png");
-    ALLEGRO_BITMAP *bm_ = al_load_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+    bm_ = al_load_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+    if(!bm_) throw Failure("failed to load menu bitmap");
     al_destroy_path(path);
 }
 
