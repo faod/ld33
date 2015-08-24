@@ -272,12 +272,21 @@ void Map::drawswampgrass()
     }
 }
 
+static Tile *nullTile = NULL;
+
 Tile Map::what(int x, int y) {
+	if (x >= this->width_  || x < 0 ||
+	    y >= this->height_ || y < 0) {
+		if (!nullTile) {
+			nullTile = new Tile(-10, -10);
+		}
+		return *nullTile;
+	}
 	return tiles_[y][x];
 }
 
 Tile Map::what(float x, float y) {
-	return tiles_[y/32.][x/32.];
+	return what((int)(y/32.), (int)(x/32.));
 }
 
 void Map::updatevoisins(int x, int y)
