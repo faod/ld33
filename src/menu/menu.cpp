@@ -50,6 +50,7 @@ Menu::~Menu()
 {
     al_destroy_bitmap(bm_);
     al_detach_audio_stream(str_);
+    al_rewind_audio_stream(str_);
 }
 
 
