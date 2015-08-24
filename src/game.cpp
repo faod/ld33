@@ -29,7 +29,7 @@ Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", 
     for (int i=0; i<10; i++) {
         do {
             v = glm::vec2(std::rand() % map_.getWidth() * 32 + 16, std::rand() % map_.getHeight() * 32 + 16);
-        } while (map_.what(v.x, v.y) != GRASS);
+        } while (map_.what(v.x, v.y).getBiome() != GRASS);
 
         addObject(std::make_shared<Villager, glm::vec2&>(v, *this));
     }

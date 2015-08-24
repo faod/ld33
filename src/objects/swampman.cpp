@@ -41,7 +41,10 @@ void Swampman::update()
 
     if(!((up == down) && (right == left))) //if there is movement
     {
-        setSpeed(5.);
+        if(game_.map_.what(position.x, position.y) == GRASS)
+            setSpeed(2.);
+        else
+            setSpeed(2.4);
         step();
     }
     if(throwing && ballammo_ && !throwcd_)
@@ -52,7 +55,7 @@ void Swampman::update()
         decltype(position) ballpos = position;
         ballpos += glm::vec2(-sin(this->orientation), cos(this->orientation)) * 32.f;
         auto ptr = std::make_shared<Ball>(ballpos, game_, this->orientation);
-        ptr->setSpeed(5. * 1.5);
+        ptr->setSpeed(2. * 1.5);
         game_.addObject(ptr);
     }
 }
@@ -101,7 +104,7 @@ void Swampman::processInput(ALLEGRO_EVENT ev)
             case ALLEGRO_KEY_DOWN:  down     = true; break;
             case ALLEGRO_KEY_LEFT:  left     = true; break;
             case ALLEGRO_KEY_RIGHT: right    = true; break;
-            case ALLEGRO_KEY_RCTRL: throwing = true; break;
+            case ALLEGRO_KEY_LCTRL: throwing = true; break;
             default: break;
         };
     }
@@ -113,7 +116,7 @@ void Swampman::processInput(ALLEGRO_EVENT ev)
             case ALLEGRO_KEY_DOWN:  down     = false; break;
             case ALLEGRO_KEY_LEFT:  left     = false; break;
             case ALLEGRO_KEY_RIGHT: right    = false; break;
-            case ALLEGRO_KEY_RCTRL: throwing = false; break;
+            case ALLEGRO_KEY_LCTRL: throwing = false; break;
             default: break;
         };
 
