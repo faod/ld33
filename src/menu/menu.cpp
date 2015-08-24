@@ -5,8 +5,7 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
 
-
-
+#include <iostream>
 
 #include "menu.hpp"
 #include "../main.hpp"
@@ -39,9 +38,14 @@ Menu::Menu(int width, int height, Game &g) : width_(width), height_(height), gam
         str_ = al_load_audio_stream(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), 4, 2048);
         al_set_audio_stream_playmode(str_, ALLEGRO_PLAYMODE_LOOP);
         al_destroy_path(path);
+        if (!str_) {
+            std::cerr << "cannot open/load stream menu.xm\n";
+        }
     }
 
-    al_attach_audio_stream_to_voice(str_, Game::voice);
+    if (!al_attach_audio_stream_to_voice(str_, Game::voice)) {
+        std::cerr << "failed to attach stream to voice\n";
+    }
 
 }
 

@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <memory>
 #include <cstdlib>
+#include <iostream>
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
@@ -41,6 +42,10 @@ Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", 
     if(!voice)
     {
         voice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
+        if(!voice)
+        {
+            std::cerr << "voice is null\n";
+        }
     }
 
     menu_   = std::make_shared<Menu>(m.screen_w, m.screen_h, *this);
