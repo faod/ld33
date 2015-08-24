@@ -140,7 +140,7 @@ float Object::getOrientation() {
 bool Object::collide(Object &other) {
 	ConvexHull *c1 = getConvexHull();
 	ConvexHull *c2 = other.getConvexHull();
-	bool res = c1->intersects(*c2);
+	bool res = c1->intersects(*c2) || c2->intersects(*c1);
 	delete c1; delete c2;
 	return res;
 }

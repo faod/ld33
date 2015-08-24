@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "villager.hpp"
 #include "swampman.hpp"
 #include "ball.hpp"
 #include "../game.hpp"
@@ -77,9 +78,24 @@ void Swampman::update()
         for (int j=-1; j<2; j++) {
             t = game.map_.what(position.x + i*32.f, position.y + j*32.f);
             if (collide(t.asObject())) {
-                if(t.getBiome() == SWAMP && t.ignited() && !burned) {
+                if(t.getBiome() == SWAMP && t.ignited()) {
                     hp_ -= 1;
                     burned = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    if (!burned) {
+        for(int i=0; i < game.objects_.size(); ++i) {
+            if (game.objects_[i]) {
+                if (std::dynamic_pointer_cast<Flame>(game.objects_[i])) {
+                    if (collide(*(game.objects_[i]))) {
+                        hp_ -= 1;
+                        burned = true;
+                        break;
+                    }
                 }
             }
         }
