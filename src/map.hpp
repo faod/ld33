@@ -44,9 +44,11 @@ class Tile
         size_t topright() const;
         size_t botleft() const;
         size_t botright() const;
+        BoxObject& asObject() const;
 
         static std::shared_ptr<ALLEGRO_BITMAP> getFlameFrame(size_t num);
     private:
+        static BoxObject tileCollObj;
         static ALLEGRO_BITMAP *flames;
         int x_;
         int y_;

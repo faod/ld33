@@ -7,6 +7,7 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
 
+#include "objects/object.hpp"
 #include "map.hpp"
 #include "noise/perlin.hpp"
 #include "game.hpp"
@@ -50,7 +51,7 @@ std::shared_ptr<ALLEGRO_BITMAP> Tileset::operator<<(size_t tile)
  *
  * **************/
 
-
+BoxObject Tile::tileCollObj(glm::vec2(32., 32.));
 
 Tile::Tile(int x, int y, BIOME b) : x_(x), y_(y), biome_(b), voisins_{GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS}, ignitetime_(0)
 {
@@ -195,6 +196,12 @@ void Tile::setVoisins(int id, BIOME b)
     voisins_[id] = b;
 }
 
+
+BoxObject& Tile::asObject() const {
+	Tile::tileCollObj.setOrientation(0.f);
+	Tile::tileCollObj.setPosition(glm::vec2(x_*32.+16, y_*32.+16));
+	return Tile::tileCollObj;
+}
 
 /***************
  *               __
@@ -445,5 +452,10 @@ void Map::drawTile(const Tile &t, std::shared_ptr<ALLEGRO_BITMAP> ptr)
     {
         al_draw_bitmap(ptr.get(), t.getx() * 32, t.gety() * 32, 0);
     }
+
+#ifdef _DEBUG
+    t.asObject().drawHull(glm::vec2(0., 0.));
+#endif //_DEBUG
+
     al_set_target_backbuffer(al_get_current_display());
 }

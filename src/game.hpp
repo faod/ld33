@@ -9,9 +9,9 @@
 #include <memory>
 
 #include "main.hpp"
+#include "objects/object.hpp"
 #include "map.hpp"
 #include "menu/menu.hpp"
-#include "objects/object.hpp"
 
 class Swampman;
 
