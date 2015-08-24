@@ -102,8 +102,10 @@ void Swampman::draw(glm::vec2 screen_ul_corner)
                            this->position.y - screen_ul_corner.y,
                            orientation + PI,
                             0);
-    drawHull(screen_ul_corner);
 
+#ifdef _DEBUG
+    drawHull(screen_ul_corner);
+#endif // _DEBUG
 }
 
 

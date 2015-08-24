@@ -11,15 +11,21 @@
 class Villager: public BoxObject {
 	static ALLEGRO_BITMAP *sprite, *flames_spawn, *flames_loop;
 	static TriObject fov;
+
 	Game &game;
-	enum {
+	enum Status {
 		NONE,
 		DRYING,
 		CHASING,
-		ELOPING,
+		FLEEING,
 		ROAMING,
 		FIRING
 	} status;
+	long statusDate; // since date of the current status in milliseconds
+
+	void setStatus(Villager::Status status);
+	void chaseSwampman();
+	void fleeSwampman();
 
 public:
 	Villager(glm::vec2 spawnPosition, Game &game);

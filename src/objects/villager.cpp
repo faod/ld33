@@ -12,6 +12,8 @@ TriObject Villager::fov(10*32., 5*32., PI);
 
 Villager::Villager(glm::vec2 spawnPosition, Game &game): BoxObject(glm::vec2(30, 30)), game(game) {
 	this->position = spawnPosition;
+	this->status = NONE;
+	this->statusDate = 0L;
 
 	if (this->sprite == NULL) {
 		ALLEGRO_PATH *basedir;
@@ -37,17 +39,62 @@ Villager::Villager(glm::vec2 spawnPosition, Game &game): BoxObject(glm::vec2(30,
 	}
 }
 
+void Villager::setStatus(Villager::Status status) {
+	this->status = status;
+	this->statusDate = (long)(al_get_time() * 1000);
+}
+
+void Villager::chaseSwampman() {
+	gotoPosition(game.swampman_->getPosition());
+	step();
+}
+
+void Villager::fleeSwampman() {
+	gotoPosition(this->position - (game.swampman_->getPosition() - this->position));
+	step();
+}
+
 void Villager::update() {
 	// Set various parameters according to environment
 	if (game.map_.what(this->position.x, this->position.y) == SWAMP) {
-		this->speed = 2;
+		this->speed = 1;
 	} else {
-		this->speed = 5;
+		this->speed = 2;
 	}
+
+	Villager::fov.setPosition(this->position);
+	Villager::fov.setOrientation(this->orientation);
 
 	// IA code
 	if (status == NONE) {
-		
+		if (Villager::fov.collide(*(this->game.swampman_))) {
+			if ((char)(al_get_time()*1000.) & 0x01) {
+				setStatus(CHASING);
+				chaseSwampman();
+			}
+			else {
+				setStatus(FLEEING);
+				fleeSwampman();
+			}
+		}
+	}
+
+	else if (status == CHASING) {
+		if (Villager::fov.collide(*(this->game.swampman_))) {
+			chaseSwampman();
+		}
+		else {
+			setStatus(NONE);
+		}
+	}
+
+	else if (status == FLEEING) {
+		if ((long)(al_get_time() * 1000) > this->statusDate+2000) {
+			setStatus(NONE);
+		}
+		else {
+			fleeSwampman();
+		}
 	}
 }
 
@@ -56,11 +103,12 @@ void Villager::draw(glm::vec2 screen_ul_corner) {
 	                       this->position.x - screen_ul_corner.x,
 	                       this->position.y - screen_ul_corner.y,
 	                       orientation+PI, 0);
-
+#ifdef _DEBUG
 	drawHull(screen_ul_corner);
 
 	Villager::fov.setPosition(this->position);
 	Villager::fov.setOrientation(this->orientation);
 	Villager::fov.drawHull(screen_ul_corner);
+#endif // _DEBUG
 }
 
