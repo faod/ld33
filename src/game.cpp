@@ -33,32 +33,49 @@ Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", 
 
         addObject(std::make_shared<Villager, glm::vec2&>(v, *this));
     }
+    
+    menu_   = std::make_shared<Menu>(m.screen_w, m.screen_h);
+    playing = false;
 }
 
 void Game::update()
 {
-    map_.update();
+    if(playing)
+    {
+        map_.update();
 
-    for(int i = 0; i < objects_.size(); ++i)
-        if(objects_[i]) objects_[i]->update();
+        for(int i = 0; i < objects_.size(); ++i)
+            if(objects_[i]) objects_[i]->update();
 
-    auto it = std::remove(objects_.begin(), objects_.end(), nullptr);
-    objects_.erase(it, objects_.end());
+        auto it = std::remove(objects_.begin(), objects_.end(), nullptr);
+        objects_.erase(it, objects_.end());
+    }
+    else
+    {
+        menu_->update();
+    }
 }
 
 
 void Game::refresh()
 {
-    glm::vec2 smpos = swampman_->getPosition();
-    map_.draw(static_cast<int>(smpos[0]) - main_.screen_w / 2.,
+    if(playing)
+    {
+        glm::vec2 smpos = swampman_->getPosition();
+        map_.draw(static_cast<int>(smpos[0]) - main_.screen_w / 2.,
               static_cast<int>(smpos[1]) - main_.screen_h / 2.,
                main_.screen_w, main_.screen_h);
 
-    for(auto it = objects_.begin(); it != objects_.end(); ++it)
-        (*it)->draw(glm::vec2(static_cast<int>(smpos.x) - main_.screen_w / 2.,
+        for(auto it = objects_.begin(); it != objects_.end(); ++it)
+            (*it)->draw(glm::vec2(static_cast<int>(smpos.x) - main_.screen_w / 2.,
                               static_cast<int>(smpos.y) - main_.screen_h / 2.));
 
-    swampman_->drawHUD(main_.screen_w, main_.screen_h);
+        swampman_->drawHUD(main_.screen_w, main_.screen_h);
+     }
+     else
+     {
+        menu_->draw();
+     }
 }
 
 void Game::addObject(std::shared_ptr<Object> obj)
@@ -92,7 +109,11 @@ ALLEGRO_EVENT ev;
             main_.loop = false;
             break;
         }
-        else if(!swampman_) continue;
+        else if(!swampman_ && playing) continue;
+        else if(!playing)
+        {
+            menu_->processInput(ev);
+        }
         else
         {
             swampman_->processInput(ev);
