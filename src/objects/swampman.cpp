@@ -35,6 +35,7 @@ Swampman::~Swampman()
 
 void Swampman::update()
 {
+    Tile t;
     updateOrientation();
 
     if(throwcd_) throwcd_--;
@@ -42,12 +43,18 @@ void Swampman::update()
     if(hp_ <= 0)
         game_.stop();
 
-    Tile t = game_.map_.what(position.x, position.y);
-     if(t.getBiome() == SWAMP && t.ignited())
-     {
-        hp_ -= 1;
-     }
+    for (int i=-1; i<2; i++) {
+        for (int j=-1; j<2; j++) {
+            t = game_.map_.what(position.x + i*32.f, position.y + j*32.f);
+            if (collide(t.asObject())) {
+                if(t.getBiome() == SWAMP && t.ignited()) {
+                    hp_ -= 1;
+                }
+            }
+        }
+    }
 
+    t = game_.map_.what(position.x, position.y);
     if(!((up == down) && (right == left))) //if there is movement
     {
         if(t.getBiome() == GRASS)
@@ -147,3 +154,13 @@ void Swampman::drawHUD(int topx, int topy)
 
     al_draw_textf(Main::main_font, al_map_rgb(241, 31, 31), topx + 110., topy + 22., 0, "%d",hp_);
 }
+
+void Swampman::step() {
+	Object::step();
+	if (this->position.x < 16) this->position.x = 16;
+	if (this->position.y < 16) this->position.y = 16;
+
+	if (this->position.x > (this->game_.map_.getWidth()  * 32 - 16)) this->position.x = (this->game_.map_.getWidth()  * 32 - 16);
+	if (this->position.y > (this->game_.map_.getHeight() * 32 - 16)) this->position.y = (this->game_.map_.getHeight() * 32 - 16);
+}
+

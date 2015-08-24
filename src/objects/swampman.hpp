@@ -17,6 +17,7 @@ class Swampman : public BoxObject
 
         virtual void update();
         virtual void draw(glm::vec2 screen_ul_corner);
+        virtual void step();
 
         void drawHUD(int width, int height);
 
