@@ -25,7 +25,7 @@ public:
 
 // ----
 
-class Villager: public Character {
+class Villager: public Character, public std::enable_shared_from_this<Villager> {
 	static ALLEGRO_BITMAP *sprite;
 	static TriObject fov;
 
@@ -38,6 +38,7 @@ class Villager: public Character {
 		FIRING
 	} status;
 	long statusDate; // since date of the current status in milliseconds
+	int hp; // health
 
 	void setStatus(Villager::Status status);
 	void chaseSwampman();

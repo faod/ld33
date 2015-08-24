@@ -32,6 +32,7 @@ class Swampman : public Character
         void drawHUD(int width, int height);
 
         void processInput(ALLEGRO_EVENT ev);
+        void respawn();
 
     private:
         ALLEGRO_BITMAP *sprite_;
@@ -42,9 +43,9 @@ class Swampman : public Character
         bool right;
         bool throwing;
 
-        unsigned int ballammo_;
-        unsigned int throwcd_;
-        unsigned int hp_;
+        int ballammo_;
+        int throwcd_;
+        int hp_;
 
         void updateOrientation();
 };

@@ -1,6 +1,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 
+#include "ball.hpp"
 #include "villager.hpp"
 #include "../main.hpp"
 #include "../game.hpp"
@@ -80,6 +81,7 @@ Villager::Villager(glm::vec2 spawnPosition, Game &game): Character(glm::vec2(30,
 	this->position = spawnPosition;
 	this->status = NONE;
 	this->statusDate = 0L;
+	this->hp = 100;
 
 	if (this->sprite == NULL) {
 		ALLEGRO_PATH *path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
@@ -106,6 +108,29 @@ void Villager::fleeSwampman() {
 }
 
 void Villager::update() {
+	auto ptr = shared_from_this();
+
+	// Check for projectiles
+	for(int i=0; i < game.objects_.size(); ++i) {
+		if (game.objects_[i]) {
+			if (std::dynamic_pointer_cast<Ball>(game.objects_[i])) {
+				auto ball = std::dynamic_pointer_cast<Ball>(game.objects_[i]);
+				if (ball->isActive()) {
+					if (collide(*(game.objects_[i]))) {
+						ball->deactivate();
+						hp -= 30;
+						if (hp <= 0) {
+							game.removeObject(ptr);
+							return;
+						}
+						this->orientation = PI + ball->getOrientation();
+						break;
+					}
+				}
+			}
+		}
+	}
+
 	// Set various parameters according to environment
 	if (game.map_.what(this->position.x, this->position.y) == SWAMP) {
 		this->speed = 1;

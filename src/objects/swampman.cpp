@@ -163,6 +163,9 @@ void Swampman::draw(glm::vec2 screen_ul_corner)
 #endif // _DEBUG
 }
 
+void Swampman::respawn() {
+	hp_ = 100;
+}
 
 void Swampman::processInput(ALLEGRO_EVENT ev)
 {
@@ -200,6 +203,6 @@ void Swampman::drawHUD(int topx, int topy)
 
     al_draw_filled_rectangle(topx + 20. , topy + 20. , topx + 20. + (hp_ / 100. * 60), topy + 30., al_map_rgb(241, 31, 31));
 
-    al_draw_textf(Main::main_font, al_map_rgb(241, 31, 31), topx + 110., topy + 22., 0, "%d",hp_);
+    al_draw_textf(Main::main_font, al_map_rgb(241, 31, 31), topx + 110., topy + 20., 0, "%d",hp_);
 }
 
