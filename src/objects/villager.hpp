@@ -31,6 +31,7 @@ public:
 	Villager(glm::vec2 spawnPosition, Game &game);
 	virtual void update();
 	virtual void draw(glm::vec2 screen_ul_corner);
+	virtual void step();
 };
 
 #endif // VILLAGER_HPP

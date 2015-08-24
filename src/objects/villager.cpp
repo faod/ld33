@@ -112,3 +112,12 @@ void Villager::draw(glm::vec2 screen_ul_corner) {
 #endif // _DEBUG
 }
 
+void Villager::step() {
+	Object::step();
+	if (this->position.x < 16) this->position.x = 16;
+	if (this->position.y < 16) this->position.y = 16;
+
+	if (this->position.x > (this->game.map_.getWidth()  * 32 - 16)) this->position.x = (this->game.map_.getWidth()  * 32 - 16);
+	if (this->position.y > (this->game.map_.getHeight() * 32 - 16)) this->position.y = (this->game.map_.getHeight() * 32 - 16);
+}
+
