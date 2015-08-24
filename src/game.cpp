@@ -12,6 +12,7 @@
 #include "game.hpp"
 #include "objects/swampman.hpp"
 #include "objects/villager.hpp"
+#include "menu/menu.hpp"
 
 
 Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", "map_width")),
