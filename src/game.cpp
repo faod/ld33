@@ -34,7 +34,7 @@ Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", 
         addObject(std::make_shared<Villager, glm::vec2&>(v, *this));
     }
     
-    menu_   = std::make_shared<Menu>(m.screen_w, m.screen_h);
+    menu_   = std::make_shared<Menu>(m.screen_w, m.screen_h, *this);
     playing = false;
 }
 
@@ -120,4 +120,14 @@ ALLEGRO_EVENT ev;
         }
     }
 
+}
+
+void Game::start()
+{
+    playing = true;
+}
+
+void Game::stop()
+{
+    playing = false;
 }

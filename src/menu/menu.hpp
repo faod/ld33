@@ -6,10 +6,12 @@
 #include <allegro5/allegro.h>
 #include <string>
 
+class Game;
+
 class Menu
 {
     public:
-        Menu(int width, int height);
+        Menu(int width, int height, Game& g);
         ~Menu();
 
         void update();
@@ -19,6 +21,7 @@ class Menu
     private:
         int width_;
         int height_;
+        Game &game_;
         ALLEGRO_BITMAP* bm_;
 
 };

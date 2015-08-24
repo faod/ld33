@@ -11,8 +11,9 @@
 #include "menu.hpp"
 #include "../main.hpp"
 #include "../failure.hpp"
+#include "../game.hpp"
 
-Menu::Menu(int width, int height) : width_(width), height_(height)
+Menu::Menu(int width, int height, Game &g) : width_(width), height_(height), game_(g)
 {
     ALLEGRO_PATH *path;
     path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
@@ -35,6 +36,13 @@ Menu::~Menu()
 
 void Menu::processInput(ALLEGRO_EVENT ev)
 {
+    if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
+    {
+        if(ev.keyboard.keycode == ALLEGRO_KEY_SPACE)
+        {
+            game_.start();
+        }
+    }
 }
 
 void Menu::draw()

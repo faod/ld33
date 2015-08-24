@@ -25,6 +25,9 @@ public:
     void update();
     void refresh();
 
+    void start();
+    void stop();
+
     void removeObject(std::shared_ptr<Object> obj);
     void addObject(std::shared_ptr<Object> obj);
 
