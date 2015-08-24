@@ -286,7 +286,7 @@ Tile Map::what(int x, int y) {
 }
 
 Tile Map::what(float x, float y) {
-	return what((int)(y/32.), (int)(x/32.));
+	return what((int)(x/32.), (int)(y/32.));
 }
 
 void Map::updatevoisins(int x, int y)
