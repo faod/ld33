@@ -10,10 +10,22 @@
 
 #include "menu.hpp"
 #include "../main.hpp"
-Menu::Menu(std::shared_ptr<ALLEGRO_BITMAP> bm, int width, int height, std::string title) : bm_(bm), width_(width), height_(height), title_(title)
-{
 
+Menu::Menu(int width, int height) : width_(width), height_(height)
+{
+    ALLEGRO_PATH *path;
+    path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+    al_append_path_component(path, RESOURCES_DIR);
+    al_set_path_filename(path, "home.png");
+    ALLEGRO_BITMAP *bm_ = al_load_bitmap(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP));
+    al_destroy_path(path);
 }
+
+Menu::~Menu()
+{
+    al_destroy_bitmap(bm_);
+}
+
 
 void Menu::processInput(ALLEGRO_EVENT ev)
 {
@@ -21,9 +33,8 @@ void Menu::processInput(ALLEGRO_EVENT ev)
 
 void Menu::draw()
 {
-    al_draw_bitmap(bm_.get(), al_get_display_width(al_get_current_display()) / 2 - width_, al_get_display_height(al_get_current_display()) / 2 - height_, 0);
-    
-    al_draw_text(Main::main_font, al_map_rgb(255, 0, 0), al_get_display_width(al_get_current_display()) / 2, (al_get_display_height(al_get_current_display()) / 2 - height_) + 30, 0, title_.c_str());
+    al_clear_to_color(al_map_rgb(0, 0, 0));
+    al_draw_scaled_bitmap(bm_, 0, 0, 128, 128, (width_ / 2) - (128 * 2), (height_ / 2) - (128 * 2), 128 * 4, 128 * 4, 0);
 }
 
 void Menu::update()

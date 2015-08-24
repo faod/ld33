@@ -6,15 +6,11 @@
 #include <allegro5/allegro.h>
 #include <string>
 
-class MenuItem
-{
-    
-};
-
 class Menu
 {
     public:
-        Menu(std::shared_ptr<ALLEGRO_BITMAP> bm, int width, int height, std::string title); 
+        Menu(int width, int height); 
+        ~Menu();
 
         void update();        
         void processInput(ALLEGRO_EVENT ev); 
@@ -23,8 +19,7 @@ class Menu
     private:
         int width_;
         int height_;
-        std::shared_ptr<ALLEGRO_BITMAP> bm_;
-        std::string title_;
+        ALLEGRO_BITMAP* bm_;
                 
 };
 
