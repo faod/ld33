@@ -7,7 +7,18 @@
 
 class Game;
 
-class Swampman : public BoxObject
+class Character: public BoxObject {
+protected:
+	Game &game;
+	glm::vec2 dimensions;
+public:
+	Character(glm::vec2 wh, Game &g): BoxObject(wh), game(g), dimensions(wh) {};
+
+	/// A modified step() that does not allow the character to leave the map
+	virtual void step();
+};
+
+class Swampman : public Character
 {
     public: 
         Swampman(glm::vec2 position, Game &g);
@@ -17,7 +28,6 @@ class Swampman : public BoxObject
 
         virtual void update();
         virtual void draw(glm::vec2 screen_ul_corner);
-        virtual void step();
 
         void drawHUD(int width, int height);
 
@@ -25,8 +35,6 @@ class Swampman : public BoxObject
 
     private:
         ALLEGRO_BITMAP *sprite_;
-
-        Game &game_;
 
         bool up;
         bool down;

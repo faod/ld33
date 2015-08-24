@@ -13,9 +13,38 @@
 #include "../game.hpp"
 #include "../misc/defines.hpp"
 
+void Character::step() {
+	Object::step();
+	if (this->position.x < 16) this->position.x = 16;
+	if (this->position.y < 16) this->position.y = 16;
+
+	if (this->position.x > (this->game.map_.getWidth()  * 32 - 16)) this->position.x = (this->game.map_.getWidth()  * 32 - 16);
+	if (this->position.y > (this->game.map_.getHeight() * 32 - 16)) this->position.y = (this->game.map_.getHeight() * 32 - 16);
+
+	// Collision with rocks
+	Tile t;
+	for (int i=-1; i<2; i++) {
+		for (int j=-1; j<2; j++) {
+			t = game.map_.what(position.x + i*32.f, position.y + j*32.f);
+			if (collide(t.asObject()) && t.getBiome() == ROCK) {
+				// !!! works only with squares, does not work with rectangles !!!
+				glm::vec2 tpos(t.getx()*32+16, t.gety()*32+16);
+				glm::vec2 d = tpos - position;
+				glm::vec2 d_abs = glm::abs(d);
+				if (d_abs.x > d_abs.y) {
+					this->position.x -= m_sign(d.x) * (16 + (this->dimensions.x/2.) - d_abs.x);
+				}
+				else {
+					this->position.y -= m_sign(d.y) * (16 + (this->dimensions.y/2.) - d_abs.y);
+				}
+			}
+		}
+	}
+}
+
 float Swampman::orientations[9] = {PI4_3, -PI, -PI4_3, PI2, 0., -PI2, PI4, 0., -PI4 };
 
-Swampman::Swampman(glm::vec2 pos, Game &g): BoxObject(glm::vec2(30.f, 20.f)) , game_(g), up(false), down(false), left(false), right(false), throwing(false), hp_(100), ballammo_(3), throwcd_(0)
+Swampman::Swampman(glm::vec2 pos, Game &g): Character(glm::vec2(28.f, 28.f), g) , up(false), down(false), left(false), right(false), throwing(false), hp_(100), ballammo_(3), throwcd_(0)
 {
     setPosition(pos);
 
@@ -41,20 +70,22 @@ void Swampman::update()
     if(throwcd_) throwcd_--;
 
     if(hp_ <= 0)
-        game_.stop();
+        game.stop();
 
+    bool burned = false;
     for (int i=-1; i<2; i++) {
         for (int j=-1; j<2; j++) {
-            t = game_.map_.what(position.x + i*32.f, position.y + j*32.f);
+            t = game.map_.what(position.x + i*32.f, position.y + j*32.f);
             if (collide(t.asObject())) {
-                if(t.getBiome() == SWAMP && t.ignited()) {
+                if(t.getBiome() == SWAMP && t.ignited() && !burned) {
                     hp_ -= 1;
+                    burned = true;
                 }
             }
         }
     }
 
-    t = game_.map_.what(position.x, position.y);
+    t = game.map_.what(position.x, position.y);
     if(!((up == down) && (right == left))) //if there is movement
     {
         if(t.getBiome() == GRASS)
@@ -74,9 +105,9 @@ void Swampman::update()
 
         decltype(position) ballpos = position;
         ballpos += glm::vec2(-sin(this->orientation), cos(this->orientation)) * 32.f;
-        auto ptr = std::make_shared<Ball>(ballpos, game_, this->orientation);
+        auto ptr = std::make_shared<Ball>(ballpos, game, this->orientation);
         ptr->setSpeed(2. * 1.5);
-        game_.addObject(ptr);
+        game.addObject(ptr);
     }
 }
 
@@ -153,14 +184,5 @@ void Swampman::drawHUD(int topx, int topy)
     al_draw_filled_rectangle(topx + 20. , topy + 20. , topx + 20. + (hp_ / 100. * 60), topy + 30., al_map_rgb(241, 31, 31));
 
     al_draw_textf(Main::main_font, al_map_rgb(241, 31, 31), topx + 110., topy + 22., 0, "%d",hp_);
-}
-
-void Swampman::step() {
-	Object::step();
-	if (this->position.x < 16) this->position.x = 16;
-	if (this->position.y < 16) this->position.y = 16;
-
-	if (this->position.x > (this->game_.map_.getWidth()  * 32 - 16)) this->position.x = (this->game_.map_.getWidth()  * 32 - 16);
-	if (this->position.y > (this->game_.map_.getHeight() * 32 - 16)) this->position.y = (this->game_.map_.getHeight() * 32 - 16);
 }
 

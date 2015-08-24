@@ -10,7 +10,7 @@ ALLEGRO_BITMAP* Villager::flames_spawn = NULL;
 ALLEGRO_BITMAP* Villager::flames_loop = NULL;
 TriObject Villager::fov(10*32., 5*32., PI);
 
-Villager::Villager(glm::vec2 spawnPosition, Game &game): BoxObject(glm::vec2(30, 30)), game(game) {
+Villager::Villager(glm::vec2 spawnPosition, Game &game): Character(glm::vec2(30, 30), game) {
 	this->position = spawnPosition;
 	this->status = NONE;
 	this->statusDate = 0L;
@@ -110,14 +110,5 @@ void Villager::draw(glm::vec2 screen_ul_corner) {
 	Villager::fov.setOrientation(this->orientation);
 	Villager::fov.drawHull(screen_ul_corner);
 #endif // _DEBUG
-}
-
-void Villager::step() {
-	Object::step();
-	if (this->position.x < 16) this->position.x = 16;
-	if (this->position.y < 16) this->position.y = 16;
-
-	if (this->position.x > (this->game.map_.getWidth()  * 32 - 16)) this->position.x = (this->game.map_.getWidth()  * 32 - 16);
-	if (this->position.y > (this->game.map_.getHeight() * 32 - 16)) this->position.y = (this->game.map_.getHeight() * 32 - 16);
 }
 

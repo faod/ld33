@@ -8,11 +8,10 @@
 
 #include <allegro5/allegro.h>
 
-class Villager: public BoxObject {
+class Villager: public Character {
 	static ALLEGRO_BITMAP *sprite, *flames_spawn, *flames_loop;
 	static TriObject fov;
 
-	Game &game;
 	enum Status {
 		NONE,
 		DRYING,
@@ -31,7 +30,6 @@ public:
 	Villager(glm::vec2 spawnPosition, Game &game);
 	virtual void update();
 	virtual void draw(glm::vec2 screen_ul_corner);
-	virtual void step();
 };
 
 #endif // VILLAGER_HPP
