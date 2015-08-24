@@ -4,6 +4,7 @@
 
 #include <memory>
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_audio.h>
 #include <string>
 
 class Game;
@@ -23,6 +24,8 @@ class Menu
         int height_;
         Game &game_;
         ALLEGRO_BITMAP* bm_;
+        static ALLEGRO_AUDIO_STREAM *str_;
+        static ALLEGRO_VOICE        *voice_;
 
 };
 

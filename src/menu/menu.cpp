@@ -13,6 +13,10 @@
 #include "../failure.hpp"
 #include "../game.hpp"
 
+ALLEGRO_AUDIO_STREAM *Menu::str_ = NULL;
+ALLEGRO_VOICE        *Menu::voice_ = NULL;
+
+
 Menu::Menu(int width, int height, Game &g) : width_(width), height_(height), game_(g)
 {
     ALLEGRO_PATH *path;
@@ -26,11 +30,30 @@ Menu::Menu(int width, int height, Game &g) : width_(width), height_(height), gam
     al_set_target_bitmap(bm_);
     al_draw_text(Main::main_font, al_map_rgb(255, 0, 0), 128 / 2, 128 / 2, ALLEGRO_ALIGN_CENTRE, "PRESS SPACE");
     al_set_target_backbuffer(al_get_current_display());
+
+    if(!voice_)
+    {
+        voice_ = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
+    }
+    if(!str_)
+    {
+        path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+        al_append_path_component(path, RESOURCES_DIR);
+        al_set_path_filename(path, "menu.xm");
+        str_ = al_load_audio_stream(al_path_cstr(path, ALLEGRO_NATIVE_PATH_SEP), 4, 2048);
+        al_set_audio_stream_playmode(str_, ALLEGRO_PLAYMODE_LOOP);
+        al_destroy_path(path);
+    }
+
+    al_attach_audio_stream_to_voice(str_, voice_);
+
 }
+
 
 Menu::~Menu()
 {
     al_destroy_bitmap(bm_);
+    al_detach_audio_stream(str_);
 }
 
 

@@ -44,6 +44,8 @@ void Game::update()
 {
     if(playing)
     {
+        if(menu_)
+            menu_.reset();
         map_.update();
 
         for(int i = 0; i < objects_.size(); ++i)
@@ -54,6 +56,8 @@ void Game::update()
     }
     else
     {
+        if(!menu_)
+            menu_ = std::make_shared<Menu>(main_.screen_w, main_.screen_h, *this);
         menu_->update();
     }
 }
@@ -82,7 +86,8 @@ void Game::refresh()
      }
      else
      {
-        menu_->draw();
+         if(menu_)
+            menu_->draw();
      }
 }
 
