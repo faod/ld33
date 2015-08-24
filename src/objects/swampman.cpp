@@ -39,12 +39,25 @@ void Swampman::update()
 
     if(throwcd_) throwcd_--;
 
+    if(hp_ <= 0)
+        game_.stop();
+
+    Tile t = game_.map_.what(position.x, position.y);
+     if(t.getBiome() == SWAMP && t.ignited())
+     {
+        hp_ -= 1;
+     }
+
     if(!((up == down) && (right == left))) //if there is movement
     {
-        if(game_.map_.what(position.x, position.y) == GRASS)
+        if(t.getBiome() == GRASS)
+        {
             setSpeed(2.);
-        else
+        }
+        else if(t.getBiome() == SWAMP)
+        {
             setSpeed(2.4);
+        }
         step();
     }
     if(throwing && ballammo_ && !throwcd_)

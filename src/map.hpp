@@ -32,7 +32,7 @@ class Tile
 
         void update(Map &m);
         void ignite(unsigned int time);
-
+        inline bool ignited() const { return ignitetime_ > 0; } ;
 
         inline int getx() const { return x_; };
         inline int gety() const { return y_; };

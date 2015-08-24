@@ -404,7 +404,7 @@ void Map::update()
             tiles_[y][x].update(*this);
             if(start && x % 2)
             {
-                tiles_[y][x].ignite(10000);
+                tiles_[y][x].ignite(1000);
             }
         }
     }
