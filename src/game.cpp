@@ -15,6 +15,8 @@
 #include "menu/menu.hpp"
 
 
+ALLEGRO_VOICE *Game::voice = NULL;
+
 Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", "map_width")),
                                      atoi(al_get_config_value(main_.config, "", "map_height")),
                                      atof(al_get_config_value(main_.config, "", "perlin_resolution")),
@@ -34,6 +36,11 @@ Game::Game(Main& m) : main_(m), map_(atoi(al_get_config_value(main_.config, "", 
         addObject(std::make_shared<Villager, glm::vec2&>(v, *this));
     }
     
+    if(!voice)
+    {
+        voice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
+    }
+
     menu_   = std::make_shared<Menu>(m.screen_w, m.screen_h, *this);
     playing = false;
 

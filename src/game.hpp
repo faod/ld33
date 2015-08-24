@@ -31,6 +31,8 @@ public:
 
     static void *startInput(ALLEGRO_THREAD* t, void* arg);
 
+    static ALLEGRO_VOICE *voice;
+
     void input(ALLEGRO_THREAD* t);
     void update();
     void refresh();
