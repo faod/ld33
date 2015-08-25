@@ -59,6 +59,9 @@ public:
 	/// Sets the orientation (radians)
 	virtual void setOrientation(float orient);
 
+	/// Returns the unit vector used by `step()`
+	virtual glm::vec2 getUnitDirectionVector();
+
 	/// Returns the orientation in radians
 	virtual float getOrientation();
 

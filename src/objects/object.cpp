@@ -137,6 +137,10 @@ float Object::getOrientation() {
 	return this->orientation;
 }
 
+glm::vec2 Object::getUnitDirectionVector() {
+	return glm::vec2(-sin(this->orientation), cos(this->orientation));
+}
+
 bool Object::collide(Object &other) {
 	ConvexHull *c1 = getConvexHull();
 	ConvexHull *c2 = other.getConvexHull();

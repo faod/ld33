@@ -58,8 +58,16 @@ void Ball::update()
     }
 
     if (active) {
-		step();
-		distleft_-= speed;
+		Tile *t = this->game_.map_.pwhat(this->position.x, this->position.y);
+		if (t->ignited()) {
+			t->extinguish();
+			this->game_.map_.drawTile(*t, nullptr);
+			active = false;
+		}
+		else {
+			step();
+			distleft_-= speed;
+		}
 	}
 }
 
@@ -70,15 +78,15 @@ void Ball::draw(glm::vec2 screen_ul_corner)
 		al_draw_tinted_scaled_rotated_bitmap_region(sprite_ball,
 			sx, 0, 32, 32,
 			al_map_rgb_f(1., 1., 1.),
-			8, 8,
+			16, 16,
 			this->position.x - screen_ul_corner.x, this->position.y - screen_ul_corner.y,
 			1., 1.,
 			PI+orientation, 0);
 	}
 	else {
 		al_draw_rotated_bitmap(sprite_splash,
-							   8,
-							   8,
+							   16,
+							   16,
 							   this->position.x - screen_ul_corner.x,
 							   this->position.y - screen_ul_corner.y,
 							   orientation,

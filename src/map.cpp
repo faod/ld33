@@ -191,6 +191,10 @@ void Tile::ignite(unsigned int time)
     }
 }
 
+void Tile::extinguish() {
+	ignitetime_ = 0;
+}
+
 void Tile::setVoisins(int id, BIOME b)
 {
     voisins_[id] = b;
@@ -287,6 +291,21 @@ Tile Map::what(int x, int y) {
 
 Tile Map::what(float x, float y) {
 	return what((int)(x/32.), (int)(y/32.));
+}
+
+Tile* Map::pwhat(int x, int y) {
+	if (x >= this->width_  || x < 0 ||
+	    y >= this->height_ || y < 0) {
+		if (!nullTile) {
+			nullTile = new Tile(-10, -10);
+		}
+		return nullTile;
+	}
+	return &(tiles_[y][x]);
+}
+
+Tile* Map::pwhat(float x, float y) {
+	return pwhat((int)(x/32.), (int)(y/32.));
 }
 
 void Map::updatevoisins(int x, int y)
