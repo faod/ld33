@@ -69,6 +69,16 @@ void Flame::update() {
 	auto ptr = shared_from_this();
 
 	if ((long)(al_get_time() * 1000) > this->startTime + 4000) {
+		glm::vec2 dir = getUnitDirectionVector();
+
+		glm::vec2 pos = position + dir * 20.f;
+		Tile *t = game.map_.pwhat(pos.x, pos.y);
+		if (!t->ignited()) t->ignite(1000);
+
+		pos = position + dir * 40.f;
+		t = game.map_.pwhat(pos.x, pos.y);
+		if (!t->ignited()) t->ignite(1000);
+
 		this->game.removeObject(ptr);
 	}
 }
@@ -76,7 +86,7 @@ void Flame::update() {
 // ----
 
 ALLEGRO_BITMAP* Villager::sprite = NULL;
-TriObject Villager::fov(10*32., 5*32., PI);
+TriObject Villager::fov(6*32., 5*32., PI);
 
 Villager::Villager(glm::vec2 spawnPosition, Game &game): Character(glm::vec2(30, 30), game) {
 	this->position = spawnPosition;
