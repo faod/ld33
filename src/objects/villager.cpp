@@ -5,6 +5,7 @@
 #include "villager.hpp"
 #include "../main.hpp"
 #include "../game.hpp"
+#include "../noise/perlin.hpp"
 
 ALLEGRO_BITMAP* Flame::flames_spawn = NULL;
 ALLEGRO_BITMAP* Flame::flames_loop = NULL;
@@ -136,9 +137,9 @@ void Villager::update() {
 
 	// Set various parameters according to environment
 	if (game.map_.what(this->position.x, this->position.y) == SWAMP) {
-		this->speed = 1;
+		this->speed = .8;
 	} else {
-		this->speed = 2;
+		this->speed = 1.5;
 	}
 
 	Villager::fov.setPosition(this->position);
@@ -158,6 +159,23 @@ void Villager::update() {
 		}
 		else {
 			setStatus(ROAMING);
+			this->speed = 1; // is not in a hurry
+
+			// if we are in front of a swamp tile, sets it on FIRE!!
+			glm::vec2 dir = getUnitDirectionVector();
+			dir *= 48.f;
+			glm::vec2 frontTilePos = this->position + dir;
+			Tile *t = this->game.map_.pwhat(frontTilePos.x, frontTilePos.y);
+			if (t->getBiome() == SWAMP && !(t->ignited())) {
+				setStatus(DRYING);
+				auto ptr = std::make_shared<Flame>(this->position, game, this->orientation);
+				this->flame = ptr;
+				game.addObject(ptr);
+			}
+			else {
+				this->orientation += noise1((float)(al_get_time()/50.));
+				step();
+			}
 		}
 	}
 
