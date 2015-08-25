@@ -437,10 +437,6 @@ void Map::update()
         for(int x = 0; x < tiles_[y].size(); ++x)
         {
             tiles_[y][x].update(*this);
-            if(start && x % 2)
-            {
-                tiles_[y][x].ignite(1000);
-            }
         }
     }
                 start = false;
